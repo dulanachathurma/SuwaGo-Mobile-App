@@ -251,7 +251,7 @@ BSc (Hons) Software Engineering Undergraduate · University of Kelaniya
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dulanachathurma)
 
 <br/>
-<img width="1677" height="938" alt="3f32f871-e354-4f06-89c1-bdf37ed7c36b" src="https://github.com/user-attachments/assets/f90b4ae3-bca2-4c0b-b8a3-c815ed4ec8d0" />
+<img width="50%" alt="3f32f871-e354-4f06-89c1-bdf37ed7c36b" src="https://github.com/user-attachments/assets/f90b4ae3-bca2-4c0b-b8a3-c815ed4ec8d0" />
 
 </div>
 
