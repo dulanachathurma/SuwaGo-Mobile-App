@@ -2,7 +2,7 @@
   
 # SuwaGo Mobile
   
-<img src="https://github.com/user-attachments/assets/4809f664-f14e-415a-b76e-3a15eb7035d9" width="80%" alt="Analysis output 1">
+<img src="https://github.com/user-attachments/assets/4809f664-f14e-415a-b76e-3a15eb7035d9" width="90%" alt="Analysis output 1">
 
 ### Your smart health companion in your pocket
 
@@ -56,10 +56,6 @@ The whole app works in **English**, **Sinhala** and **Tamil**. A one tap shortcu
 
 ## Screenshots
 
-<div align="center">
-  <div style="width: 100%; overflow-x: auto; white-space: nowrap;">
-    <table>
-      <tr>
         <td><img width="1800" alt="1000165856" src="https://github.com/user-attachments/assets/ea8db662-d62a-4222-91a2-928d41ea45bd" /></td>
         <td><img width="1800" alt="1000165864" src="https://github.com/user-attachments/assets/b0c9184b-cce3-456e-84c1-beb5175fd67f" /></td>
         <td><img width="1800" alt="1000165865-1" src="https://github.com/user-attachments/assets/08c01d8c-2c24-49f6-8d6b-788e64ab6bf0" /></td>
@@ -72,10 +68,7 @@ The whole app works in **English**, **Sinhala** and **Tamil**. A one tap shortcu
         <td><img width="1800" alt="1000165899" src="https://github.com/user-attachments/assets/9a28d93b-12c9-46d9-b357-8c57e8849bd2" /></td>
         <td><img width="1800" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" /></td>
         <td><img width="1800" alt="1000165869" src="https://github.com/user-attachments/assets/2daa53e5-7cbe-4740-86be-35274024666d" /></td>
-      </tr>
-    </table>
-  </div>
-</div>
+  
 
 ---
 
