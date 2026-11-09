@@ -238,7 +238,7 @@ The strings are converted from the web i18n files. There are 209 strings per lan
 
 <div align="center">
 
-<img width="517" height="760" alt="PHOTO-2026-11-09-16-45-01" src="https://github.com/user-attachments/assets/259a87fd-3661-4442-9d0a-6fa04c998f4b" />
+<img width="300" height="400" alt="PHOTO-2026-11-09-16-45-01" src="https://github.com/user-attachments/assets/259a87fd-3661-4442-9d0a-6fa04c998f4b" />
 
 
 ### Dulana Chathurma
