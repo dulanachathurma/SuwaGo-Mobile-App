@@ -8,6 +8,7 @@ import android.text.format.DateUtils
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -37,10 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import com.qualityapplied.vitacare.R
 import com.qualityapplied.vitacare.data.NotificationCenter
 import com.qualityapplied.vitacare.ui.components.SectionCard
 import com.qualityapplied.vitacare.ui.components.SmallPill
@@ -162,16 +166,27 @@ fun NotificationsScreen(onBack: () -> Unit) {
             val now = System.currentTimeMillis()
             items.forEach { n ->
                 SectionCard {
-                    Row(verticalAlignment = Alignment.Top) {
-                        Box(
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(R.drawable.vitacare_logo),
+                            contentDescription = "Notification Logo",
                             modifier = Modifier
-                                .padding(top = 5.dp, end = 10.dp)
-                                .size(8.dp)
-                                .clip(CircleShape)
-                                .background(if (n.read) Slate200 else Rose500),
+                                .size(42.dp)
+                                .clip(CircleShape),
                         )
+                        Spacer(Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            Text(n.title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Slate800)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(n.title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Slate800, modifier = Modifier.weight(1f))
+                                if (!n.read) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(8.dp)
+                                            .clip(CircleShape)
+                                            .background(Rose500),
+                                    )
+                                }
+                            }
                             Text(n.body, fontSize = 12.sp, color = Slate600, modifier = Modifier.padding(top = 2.dp))
                             Text(
                                 DateUtils.getRelativeTimeSpanString(n.time, now, DateUtils.MINUTE_IN_MILLIS).toString(),

@@ -491,9 +491,12 @@ private fun MainFlow(
                             contentAlignment = Alignment.Center,
                         ) {
                             Image(
-                                painter = painterResource(R.drawable.ic_ai_logo),
+                                painter = painterResource(R.drawable.ai_logo),
                                 contentDescription = tr("nav.ai"),
-                                modifier = Modifier.size(38.dp),
+                                modifier = Modifier
+                                    .size(46.dp)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop,
                             )
                         }
                         Spacer(Modifier.height(1.dp))
