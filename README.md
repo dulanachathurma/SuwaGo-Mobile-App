@@ -1,7 +1,7 @@
 # SuwaGo Mobile
 <div align="center">
 
-<img src="https://github.com/user-attachments/assets/4809f664-f14e-415a-b76e-3a15eb7035d9" width="60%" alt="Analysis output 1">
+<img src="https://github.com/user-attachments/assets/4809f664-f14e-415a-b76e-3a15eb7035d9" width="80%" alt="Analysis output 1">
 
 ### Your smart health companion in your pocket
 
