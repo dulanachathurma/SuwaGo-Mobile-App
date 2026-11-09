@@ -58,20 +58,21 @@ The whole app works in **English**, **Sinhala** and **Tamil**. A one tap shortcu
 
 <div align="center">
   <div style="overflow-x: auto; white-space: nowrap; padding: 10px 0;">
-    <img width="260" alt="1000165856" src="https://github.com/user-attachments/assets/ea8db662-d62a-4222-91a2-928d41ea45bd" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165864" src="https://github.com/user-attachments/assets/b0c9184b-cce3-456e-84c1-beb5175fd67f" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165865-1" src="https://github.com/user-attachments/assets/08c01d8c-2c24-49f6-8d6b-788e64ab6bf0" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165863" src="https://github.com/user-attachments/assets/efe4ef5a-72d9-4f44-85d6-6e013434c161" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165866" src="https://github.com/user-attachments/assets/aa1a0f07-0930-43da-bb11-1b1dbf715cbb" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165906" src="https://github.com/user-attachments/assets/b18d0b00-1c1b-42ba-bbd8-6c3abff37e31" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165899" src="https://github.com/user-attachments/assets/18c6e051-dbef-4aac-b717-2efb407cbb97" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165901" src="https://github.com/user-attachments/assets/7ed8a4db-af1a-4c1d-90dc-aa34a98144f6" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165899" src="https://github.com/user-attachments/assets/9a28d93b-12c9-46d9-b357-8c57e8849bd2" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" style="margin-right: 12px; display: inline-block;" />
-    <img width="260" alt="1000165869" src="https://github.com/user-attachments/assets/2daa53e5-7cbe-4740-86be-35274024666d" style="display: inline-block;" />
+    <img width="30%" alt="1000165856" src="https://github.com/user-attachments/assets/ea8db662-d62a-4222-91a2-928d41ea45bd" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165864" src="https://github.com/user-attachments/assets/b0c9184b-cce3-456e-84c1-beb5175fd67f" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165865-1" src="https://github.com/user-attachments/assets/08c01d8c-2c24-49f6-8d6b-788e64ab6bf0" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165863" src="https://github.com/user-attachments/assets/efe4ef5a-72d9-4f44-85d6-6e013434c161" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165866" src="https://github.com/user-attachments/assets/aa1a0f07-0930-43da-bb11-1b1dbf715cbb" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165906" src="https://github.com/user-attachments/assets/b18d0b00-1c1b-42ba-bbd8-6c3abff37e31" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165899" src="https://github.com/user-attachments/assets/18c6e051-dbef-4aac-b717-2efb407cbb97" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165901" src="https://github.com/user-attachments/assets/7ed8a4db-af1a-4c1d-90dc-aa34a98144f6" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165899" src="https://github.com/user-attachments/assets/9a28d93b-12c9-46d9-b357-8c57e8849bd2" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" style="margin-right: 1.5%; display: inline-block;" />
+    <img width="30%" alt="1000165869" src="https://github.com/user-attachments/assets/2daa53e5-7cbe-4740-86be-35274024666d" style="display: inline-block;" />
   </div>
 </div>
+
 ---
 
 ## Features
