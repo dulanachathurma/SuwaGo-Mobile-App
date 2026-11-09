@@ -18,7 +18,8 @@ Track your vitals. Find the right doctor. Ask the AI. Never miss a pill.
 
 <br/>
 
-<img src="assets/hero.png" alt="SuwaGo Mobile banner" width="100%" />
+<img width="1672" height="941" alt="home_banner_2" src="https://github.com/user-attachments/assets/0ab47d04-4a11-43de-ba29-5684e9651eb0" />
+
 
 </div>
 
@@ -58,18 +59,20 @@ The whole app works in **English**, **Sinhala** and **Tamil**. A one tap shortcu
 
 <table>
   <tr>
-    <td align="center" width="20%"><img src="assets/splash.jpg" alt="Splash screen" /><br/><b>Splash</b></td>
-    <td align="center" width="20%"><img src="assets/home.jpg" alt="Home dashboard" /><br/><b>Home</b></td>
-    <td align="center" width="20%"><img src="assets/doctors.jpg" alt="Find a doctor" /><br/><b>Find a Doctor</b></td>
-    <td align="center" width="20%"><img src="assets/nearby-map.jpg" alt="Nearby map" /><br/><b>Nearby Map</b></td>
-    <td align="center" width="20%"><img src="assets/profile.jpg" alt="Profile" /><br/><b>Profile</b></td>
+<img width="286" height="512" alt="1000165856" src="https://github.com/user-attachments/assets/ea8db662-d62a-4222-91a2-928d41ea45bd" />
+ <img width="229" height="512" alt="1000165864" src="https://github.com/user-attachments/assets/b0c9184b-cce3-456e-84c1-beb5175fd67f" />
+<img width="229" height="512" alt="1000165865-1" src="https://github.com/user-attachments/assets/08c01d8c-2c24-49f6-8d6b-788e64ab6bf0" />
+ <img width="229" height="512" alt="1000165863" src="https://github.com/user-attachments/assets/efe4ef5a-72d9-4f44-85d6-6e013434c161" />
+<img width="229" height="512" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" />
   </tr>
   <tr>
-    <td align="center" width="20%"><img src="assets/illness-tiles.jpg" alt="Illness tiles in Sinhala" /><br/><b>Illness Tiles</b></td>
-    <td align="center" width="20%"><img src="assets/doctor-sinhala.jpg" alt="Doctor card in Sinhala" /><br/><b>Sinhala UI</b></td>
-    <td align="center" width="20%"><img src="assets/lab-vault.jpg" alt="Lab report vault" /><br/><b>Lab Vault</b></td>
-    <td align="center" width="20%"><img src="assets/pill-reminder.jpg" alt="Pill reminder" /><br/><b>Pill Reminder</b></td>
-    <td align="center" width="20%"><img src="assets/about.jpg" alt="About the developer" /><br/><b>About</b></td>
+   <img width="229" height="512" alt="1000165866" src="https://github.com/user-attachments/assets/aa1a0f07-0930-43da-bb11-1b1dbf715cbb" />
+<img width="229" height="512" alt="1000165906" src="https://github.com/user-attachments/assets/b18d0b00-1c1b-42ba-bbd8-6c3abff37e31" />
+<img width="239" height="512" alt="1000165899" src="https://github.com/user-attachments/assets/18c6e051-dbef-4aac-b717-2efb407cbb97" />
+<img width="252" height="512" alt="1000165901" src="https://github.com/user-attachments/assets/7ed8a4db-af1a-4c1d-90dc-aa34a98144f6" />
+    <img width="239" height="512" alt="1000165899" src="https://github.com/user-attachments/assets/9a28d93b-12c9-46d9-b357-8c57e8849bd2" />
+<img width="229" height="512" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" />
+<img width="229" height="512" alt="1000165869" src="https://github.com/user-attachments/assets/2daa53e5-7cbe-4740-86be-35274024666d" />
   </tr>
 </table>
 
