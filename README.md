@@ -57,11 +57,11 @@ The whole app works in **English**, **Sinhala** and **Tamil**. A one tap shortcu
 ## Screenshots
 
 <div align="center">
-  <div style="width: 80%; overflow-x: auto; white-space: nowrap;">
+  <div style="width: 100%; overflow-x: auto; white-space: nowrap;">
     <table>
       <tr>
-        <td><img width="400" alt="1000165856" src="https://github.com/user-attachments/assets/ea8db662-d62a-4222-91a2-928d41ea45bd" /></td>
-        <td><img width="400" alt="1000165864" src="https://github.com/user-attachments/assets/b0c9184b-cce3-456e-84c1-beb5175fd67f" /></td>
+        <td><img width="800" alt="1000165856" src="https://github.com/user-attachments/assets/ea8db662-d62a-4222-91a2-928d41ea45bd" /></td>
+        <td><img width="800" alt="1000165864" src="https://github.com/user-attachments/assets/b0c9184b-cce3-456e-84c1-beb5175fd67f" /></td>
         <td><img width="400" alt="1000165865-1" src="https://github.com/user-attachments/assets/08c01d8c-2c24-49f6-8d6b-788e64ab6bf0" /></td>
         <td><img width="400" alt="1000165863" src="https://github.com/user-attachments/assets/efe4ef5a-72d9-4f44-85d6-6e013434c161" /></td>
         <td><img width="400" alt="1000165868" src="https://github.com/user-attachments/assets/81cbd449-0ef7-4b10-af3e-b08070bea26f" /></td>
