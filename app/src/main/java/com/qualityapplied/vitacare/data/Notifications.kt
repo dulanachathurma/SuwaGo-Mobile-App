@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -156,8 +157,16 @@ object NotificationCenter {
             Intent(ctx, MainActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
+        val largeIcon = try {
+            BitmapFactory.decodeResource(ctx.resources, R.drawable.vitacare_logo)
+        } catch (_: Exception) {
+            null
+        }
         val n = NotificationCompat.Builder(ctx, channel)
             .setSmallIcon(R.drawable.ic_notification)
+            .apply {
+                if (largeIcon != null) setLargeIcon(largeIcon)
+            }
             .setColor(0xFF0D9488.toInt())
             .setContentTitle(title)
             .setContentText(body)
