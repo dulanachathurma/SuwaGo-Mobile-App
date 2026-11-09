@@ -113,20 +113,10 @@ fun AppRoot() {
     }
 
     if (showSplash) {
-        val splashGradient = remember {
-            Brush.horizontalGradient(
-                colors = listOf(
-                    Color(0xFFEAB308), // Amber Yellow (Left)
-                    Color(0xFFF59E0B), // Golden Yellow
-                    Color(0xFF84CC16), // Lime Green
-                    Color(0xFF65A30D), // Apple Fresh Green (Right)
-                ),
-            )
-        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(splashGradient),
+                .background(Color.Black),
             contentAlignment = Alignment.Center,
         ) {
             Image(
