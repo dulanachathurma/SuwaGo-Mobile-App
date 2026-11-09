@@ -475,7 +475,7 @@ private fun MainFlow(
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .offset(y = (-10).dp)
+                            .offset(y = (-14).dp)
                             .clickable(onClick = {
                                 activeOverlay = null
                                 onShowNotifications(false)
@@ -484,7 +484,7 @@ private fun MainFlow(
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(56.dp)
+                                .size(62.dp)
                                 .clip(CircleShape)
                                 .background(Color.White)
                                 .border(2.5.dp, if (tab == 2 && !showNotifications && activeOverlay == null) Color(0xFF10B981) else Color(0xFF00897B), CircleShape),
@@ -494,9 +494,9 @@ private fun MainFlow(
                                 painter = painterResource(R.drawable.ai_logo),
                                 contentDescription = tr("nav.ai"),
                                 modifier = Modifier
-                                    .size(46.dp)
+                                    .size(56.dp)
                                     .clip(CircleShape),
-                                contentScale = ContentScale.Crop,
+                                contentScale = ContentScale.Fit,
                             )
                         }
                         Spacer(Modifier.height(1.dp))
