@@ -380,12 +380,46 @@ private fun AuthFlow(vm: AppViewModel) {
     }
 }
 
+val CurvedNotchBottomNavShape = GenericShape { size, _ ->
+    val cutoutRadius = 36f * 2.2f // radius of the center FAB notch
+    val cutoutDepth = 22f * 2.2f  // depth of the curve notch
+    val cornerRadius = 20f * 2.2f  // top-left and top-right corner radius
+    val centerX = size.width / 2f
+
+    moveTo(0f, cornerRadius)
+    quadraticBezierTo(0f, 0f, cornerRadius, 0f)
+
+    // Left top edge to notch start
+    lineTo(centerX - cutoutRadius - 10f, 0f)
+
+    // Curve down into notch
+    cubicTo(
+        centerX - cutoutRadius + 6f, 0f,
+        centerX - cutoutRadius + 12f, cutoutDepth,
+        centerX, cutoutDepth,
+    )
+    // Curve back up from notch
+    cubicTo(
+        centerX + cutoutRadius - 12f, cutoutDepth,
+        centerX + cutoutRadius - 6f, 0f,
+        centerX + cutoutRadius + 10f, 0f,
+    )
+
+    // Right top edge to corner
+    lineTo(size.width - cornerRadius, 0f)
+    quadraticBezierTo(size.width, 0f, size.width, cornerRadius)
+    lineTo(size.width, size.height)
+    lineTo(0f, size.height)
+    close()
+}
+
 private data class NavItem(val icon: String, val labelKey: String)
 
 private val NAV_ITEMS = listOf(
     NavItem("🏠", "nav.home"),
     NavItem("🩺", "nav.doctors"),
-    NavItem("🤖", "nav.ai"),
+    NavItem("🧠", "nav.ai"),
+    NavItem("📊", "nav.metrics"),
     NavItem("👤", "nav.profile"),
 )
 
@@ -430,34 +464,84 @@ private fun MainFlow(
                 )
             }
             Column(modifier = Modifier.fillMaxWidth()) {
-                // Icon Buttons Bar with Solid Green Background
-                Surface(
-                    color = Color(0xFF00897B),
-                    shadowElevation = 6.dp,
-                    modifier = Modifier.fillMaxWidth(),
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 2.dp),
+                    contentAlignment = Alignment.BottomCenter,
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 6.dp, vertical = 3.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalAlignment = Alignment.CenterVertically,
+                    // Floating White Card with Curved Top Cutout
+                    Surface(
+                        color = Color.White,
+                        shape = CurvedNotchBottomNavShape,
+                        shadowElevation = 8.dp,
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                        NAV_ITEMS.forEachIndexed { index, item ->
-                            BottomItem(
-                                index = index,
-                                icon = item.icon,
-                                label = tr(item.labelKey),
-                                active = tab == index && !showNotifications && activeOverlay == null,
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    activeOverlay = null
-                                    if (index == 1) doctorSpec = null
-                                    onShowNotifications(false)
-                                    tab = index
-                                },
-                            )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 6.dp),
+                            horizontalArrangement = Arrangement.SpaceAround,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            NAV_ITEMS.forEachIndexed { index, item ->
+                                if (index == 2) {
+                                    // Reserve space in layout for Center Floating FAB
+                                    Spacer(modifier = Modifier.width(56.dp))
+                                } else {
+                                    BottomItem(
+                                        index = index,
+                                        icon = item.icon,
+                                        label = tr(item.labelKey),
+                                        active = tab == index && !showNotifications && activeOverlay == null,
+                                        modifier = Modifier.weight(1f),
+                                        onClick = {
+                                            activeOverlay = null
+                                            if (index == 1) doctorSpec = null
+                                            onShowNotifications(false)
+                                            tab = index
+                                        },
+                                    )
+                                }
+                            }
                         }
+                    }
+
+                    // Center Floating Elevated FAB ("Suwa AI")
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .offset(y = (-16).dp)
+                            .clickable(onClick = {
+                                activeOverlay = null
+                                onShowNotifications(false)
+                                tab = 2
+                            }),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(54.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    Brush.linearGradient(
+                                        colors = listOf(
+                                            Color(0xFF10B981),
+                                            Color(0xFF00897B),
+                                        ),
+                                    ),
+                                )
+                                .border(3.dp, Color.White, CircleShape),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text("🧠", fontSize = 24.sp)
+                        }
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            tr("nav.ai"),
+                            fontSize = 10.5.sp,
+                            fontWeight = if (tab == 2 && !showNotifications && activeOverlay == null) FontWeight.Bold else FontWeight.SemiBold,
+                            color = if (tab == 2 && !showNotifications && activeOverlay == null) Color(0xFF00897B) else Slate500,
+                        )
                     }
                 }
 
@@ -494,12 +578,16 @@ private fun MainFlow(
                 when (tab) {
                     0 -> DashboardScreen(
                         vm = vm,
-                        onOpenMetrics = { activeOverlay = "metrics" },
+                        onOpenMetrics = { tab = 3 },
                         onOpenReminders = { activeOverlay = "reminders" },
                         onOpenVault = { activeOverlay = "vault" },
                     )
                     1 -> DoctorScreen(doctorSpec)
                     2 -> AiAssistantScreen(vm)
+                    3 -> MetricsScreen(vm, onFindDoctor = { spec ->
+                        doctorSpec = spec
+                        tab = 1
+                    })
                     else -> ProfileScreen(
                         vm,
                         onOpenNotifications = { onShowNotifications(true) },
@@ -533,17 +621,17 @@ private fun BottomItem(index: Int, icon: String, label: String, active: Boolean,
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
-            .background(if (active) Color.White.copy(alpha = 0.95f) else Color.Transparent)
+            .background(if (active) Color(0xFF00897B).copy(alpha = 0.12f) else Color.Transparent)
             .clickable(onClick = onClick)
             .padding(vertical = 4.dp, horizontal = 2.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (index == 3 || icon == "👤") {
+        if (index == 4 || icon == "👤") {
             Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = label,
                 modifier = Modifier.size(20.dp),
-                tint = if (active) Color(0xFF00897B) else Color.White,
+                tint = if (active) Color(0xFF00897B) else Slate500,
             )
         } else {
             Text(icon, fontSize = 18.sp)
@@ -552,8 +640,8 @@ private fun BottomItem(index: Int, icon: String, label: String, active: Boolean,
         Text(
             label,
             fontSize = 10.5.sp,
-            fontWeight = if (active) FontWeight.Bold else FontWeight.SemiBold,
-            color = if (active) Color(0xFF00897B) else Color.White,
+            fontWeight = if (active) FontWeight.Bold else FontWeight.Medium,
+            color = if (active) Color(0xFF00897B) else Slate500,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center,

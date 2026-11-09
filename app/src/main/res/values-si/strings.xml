@@ -270,7 +270,7 @@
     <string name="notif_alertBody">ඔබේ නවතම කියවීමට අවධානය අවශ්‍යයි</string>
     <string name="notif_welcomeTitle">Suwago වෙත සාදරයෙන් පිළිගනිමු</string>
     <string name="notif_welcomeBody">දෛනික සිහිකැඳවීම් සක්‍රීය කිරීමට පැතිකඩෙන් දැනුම්දීම් විවෘත කරන්න.</string>
-    <string name="nav_ai">AI</string>
+    <string name="nav_ai">Suwa AI</string>
     <string name="ai_title">AI සෞඛ්‍ය සහායක</string>
     <string name="ai_intro">රෝග ලක්ෂණ, කියවීම්, BMI හෝ කුමන වෛද්‍යවරයා හමුවිය යුතුදැයි අසන්න.</string>
     <string name="ai_hello">ආයුබෝවන්! මම ඔබේ Suwago AI සහායකයා. අද මට ඔබට උදව් කළ හැක්කේ කෙසේද?</string>

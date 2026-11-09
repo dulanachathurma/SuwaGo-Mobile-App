@@ -270,7 +270,7 @@
     <string name="notif_alertBody">Your latest reading needs attention</string>
     <string name="notif_welcomeTitle">Welcome to Suwago</string>
     <string name="notif_welcomeBody">Open Notifications from your profile to turn on daily reminders.</string>
-    <string name="nav_ai">AI</string>
+    <string name="nav_ai">Suwa AI</string>
     <string name="ai_title">AI health assistant</string>
     <string name="ai_intro">Ask about symptoms, readings, BMI or which doctor to see.</string>
     <string name="ai_hello">Hi! I\'m your Suwago AI assistant. How can I help you today?</string>
