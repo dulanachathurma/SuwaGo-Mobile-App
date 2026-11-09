@@ -103,22 +103,67 @@ fun AppRoot() {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var showNotifications by rememberSaveable { mutableStateOf(false) }
-    var showSplash by rememberSaveable { mutableStateOf(true) }
+    var splashStage by remember { mutableIntStateOf(1) } // 1 = VitaCare Logo (2s), 2 = SuwaGo Banner (3s), 0 = Finished
     var showAppInfoDialog by rememberSaveable { mutableStateOf(false) }
     val loggedIn = vm.user != null
 
     LaunchedEffect(Unit) {
-        delay(2000)
-        showSplash = false
+        delay(2000) // Screen 1: VitaCare Logo for 2 seconds
+        splashStage = 2
+        delay(3000) // Screen 2: SuwaGo Banner for 3 seconds
+        splashStage = 0
     }
 
-    if (showSplash) {
-        Image(
-            painter = painterResource(R.drawable.splash_bg),
-            contentDescription = "Splash Screen",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds,
-        )
+    if (splashStage != 0) {
+        if (splashStage == 1) {
+            val splash1Gradient = remember {
+                Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFFEAB308), // Vibrant Amber Yellow (Top)
+                        Color(0xFFF59E0B), // Golden Yellow
+                        Color(0xFF84CC16), // Bright Lime Green
+                        Color(0xFF65A30D), // Apple Fresh Green (Bottom)
+                    ),
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(splash1Gradient),
+                contentAlignment = Alignment.Center,
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.vitacare_logo),
+                    contentDescription = "VitaCare Logo",
+                    modifier = Modifier.size(160.dp),
+                    contentScale = ContentScale.Fit,
+                )
+            }
+        } else {
+            val splash2Gradient = remember {
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFFEAB308), // Amber Yellow (Left)
+                        Color(0xFFF59E0B), // Golden Yellow
+                        Color(0xFF84CC16), // Lime Green
+                        Color(0xFF65A30D), // Apple Fresh Green (Right)
+                    ),
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(splash2Gradient),
+                contentAlignment = Alignment.Center,
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.splash_bg),
+                    contentDescription = "SuwaGo Splash Screen",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Fit,
+                )
+            }
+        }
         return
     }
 
@@ -263,8 +308,9 @@ fun SuwagoModernHeader(
     val topBarGradient = remember {
         Brush.horizontalGradient(
             colors = listOf(
-                Color(0xFFF59E0B), // Warm Amber Yellow
-                Color(0xFF10B981), // Fresh Emerald Green
+                Color(0xFFFFB703), // Vibrant Amber Gold
+                Color(0xFF10B981), // Bright Emerald Green
+                Color(0xFF00897B), // Deep Vibrant Teal
             ),
         )
     }
@@ -415,13 +461,14 @@ private fun MainFlow(
             val navSystemBarGradient = remember {
                 Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFFF59E0B), // Warm Amber Yellow
-                        Color(0xFF10B981), // Fresh Emerald Green
+                        Color(0xFFFFB703), // Vibrant Amber Gold
+                        Color(0xFF10B981), // Bright Emerald Green
+                        Color(0xFF00897B), // Deep Vibrant Teal
                     ),
                 )
             }
             Column(modifier = Modifier.fillMaxWidth()) {
-                // Main Navigation Bar with Primary Green Background (#00897B)
+                // Icon Buttons Bar with Solid Green Background
                 Surface(
                     color = Color(0xFF00897B),
                     shadowElevation = 6.dp,
@@ -452,7 +499,7 @@ private fun MainFlow(
                     }
                 }
 
-                // Dedicated Gradient Scrim for ONLY the System Navigation Bar / Back Button Section
+                // Dedicated Bright Gradient Scrim for ONLY the System Navigation Bar / Back Button Section Below
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
