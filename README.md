@@ -242,7 +242,8 @@ The strings are converted from the web i18n files. There are 209 strings per lan
 
 <div align="center">
 
-<img src="assets/developer.png" alt="Dulana Chathurma" width="140" />
+<img width="1035" height="1520" alt="PHOTO-2026-11-09-16-45-01" src="https://github.com/user-attachments/assets/259a87fd-3661-4442-9d0a-6fa04c998f4b" />
+
 
 ### Dulana Chathurma
 
@@ -254,8 +255,7 @@ BSc (Hons) Software Engineering Undergraduate · University of Kelaniya
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dulanachathurma)
 
 <br/>
-
-<img src="assets/wordmark.png" alt="SuwaGo" width="260" />
+<img width="1677" height="938" alt="3f32f871-e354-4f06-89c1-bdf37ed7c36b" src="https://github.com/user-attachments/assets/f90b4ae3-bca2-4c0b-b8a3-c815ed4ec8d0" />
 
 </div>
 
