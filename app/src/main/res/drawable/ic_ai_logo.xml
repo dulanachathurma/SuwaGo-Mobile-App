@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!-- Purple Head Silhouette Base -->
+    <path
+        android:fillColor="#7E22CE"
+        android:pathData="M24,6C15.16,6 8,13.16 8,22c0,4.2 1.63,8.02 4.29,10.87C10.5,35.5 9,39 9,39l6,-2c2.47,1.27 5.28,2 8.25,2 9.1,0 16.5,-7.4 16.5,-16.5S32.35,6 24,6zM24,36.5c-7.98,0 -14.5,-6.52 -14.5,-14.5S16.02,7.5 24,7.5s14.5,6.52 14.5,14.5 -6.52,14.5 -14.5,14.5z"/>
+
+    <!-- Neural Network Node Connections -->
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M24,14c-4.42,0 -8,3.58 -8,8 0,2.1 0.81,4.01 2.14,5.43l1.42,-1.42C18.57,24.96 18,23.55 18,22c0,-3.31 2.69,-6 6,-6s6,2.69 6,6c0,1.55 -0.57,2.96 -1.56,4.01l1.42,1.42C31.19,26.01 32,24.1 32,22c0,-4.42 -3.58,-8 -8,-8z"/>
+
+    <!-- Neural Node Points -->
+    <path
+        android:fillColor="#0284C7"
+        android:pathData="M24,17.5m-2,0a2,2 0 1,0 4,0a2,2 0 1,0 -4,0M19.5,21.5m-1.5,0a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0M28.5,21.5m-1.5,0a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0M21.5,26.5m-1.5,0a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0M26.5,26.5m-1.5,0a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"/>
+</vector>
