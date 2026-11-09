@@ -47,7 +47,7 @@ Track your vitals. Find the right doctor. Ask the AI. Never miss a pill.
 
 The whole app works in **English**, **Sinhala** and **Tamil**. A one tap shortcut on the home screen calls the **1990** emergency ambulance service.
 
-> The app talks to the deployed backend at **https://suwago.vercel.app/api**.
+> The app talks to the deployed backend at **https://suwago.vercel.app/api****.
 > If the URL changes, update `BASE_URL` in
 > `app/src/main/java/com/qualityapplied/vitacare/data/ApiClient.kt`.
 
