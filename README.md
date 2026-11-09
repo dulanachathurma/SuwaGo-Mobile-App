@@ -4,6 +4,8 @@
   
 <img src="https://github.com/user-attachments/assets/4809f664-f14e-415a-b76e-3a15eb7035d9" width="90%" alt="Analysis output 1">
 
+[![View Project Proposal PDF](https://img.shields.io/badge/📄%20View%20Project%20Proposal%20PDF-0E8C7F?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/file/d/16u8mdVP9Wt4ZvQgWhEnEsdoRQpEps7jj/view?usp=sharing)
+
 ### Your smart health companion in your pocket
 
 **Native Android app built with Kotlin and Jetpack Compose**
