@@ -1,6 +1,6 @@
 <div align="center">
   
-# SuwaGo Mobile
+# SuwaGo App
   
 <img src="https://github.com/user-attachments/assets/4809f664-f14e-415a-b76e-3a15eb7035d9" width="90%" alt="Analysis output 1">
 
