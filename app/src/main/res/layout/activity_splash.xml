@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splashRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F172A">
+
+    <!-- 1. Background Image (Dark Medical Photography Style) -->
+    <ImageView
+        android:id="@+id/ivDarkMedicalBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_bg"
+        tools:src="@drawable/splash_bg" />
+
+    <!-- 2. Dark Scrim / Gradient Overlay to maintain dark ambient photography look -->
+    <View
+        android:id="@+id/viewDarkScrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#990F172A" />
+
+    <!-- 3. Center Branding Container (Stethoscope + "suwago" Text) -->
+    <LinearLayout
+        android:id="@+id/llCenterBranding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivStethoscopeLogo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:contentDescription="SuwaGo Stethoscope Logo"
+            android:scaleType="fitCenter"
+            android:src="@drawable/vitacare_logo"
+            tools:src="@drawable/vitacare_logo" />
+
+        <!-- "suwago" PNG text logo - kept completely vibrant, bright, and untouched with original colors -->
+        <ImageView
+            android:id="@+id/ivSuwagoTextLogo"
+            android:layout_width="220dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="suwago"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+
+    <!-- 4. Bottom Typography (Sinhala Tagline & Secondary Subtitle) -->
+    <LinearLayout
+        android:id="@+id/llBottomTypography"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTaglineSinhala"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="නීරෝගී ජීවිතයකට"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvTaglineEnglish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Your Personal Health Companion"
+            android:textColor="#9CA3AF"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</RelativeLayout>
