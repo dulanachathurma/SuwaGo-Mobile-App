@@ -12,7 +12,9 @@ import com.qualityapplied.vitacare.data.ApiClient
 import com.qualityapplied.vitacare.data.ApiException
 import com.qualityapplied.vitacare.data.ChatMsg
 import com.qualityapplied.vitacare.data.NotificationCenter
+import com.qualityapplied.vitacare.data.PharmacyUiState
 import com.qualityapplied.vitacare.data.SessionStore
+import com.qualityapplied.vitacare.data.SriLankaLocations
 import com.qualityapplied.vitacare.data.User
 import com.qualityapplied.vitacare.data.localizedContext
 import kotlinx.coroutines.launch
@@ -130,5 +132,49 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             o.put("bmi", String.format(Locale.US, "%.1f", w / (m * m)).toDouble())
         }
         return if (o.length() == 0) null else o
+    }
+
+    // ---------- Nearby Pharmacies State Management ----------
+
+    var pharmacyState by mutableStateOf(PharmacyUiState())
+        private set
+
+    fun selectProvince(provinceKey: String) {
+        val firstDistrict = SriLankaLocations.PROVINCES.firstOrNull { it.key == provinceKey }
+            ?.districts?.firstOrNull()?.key ?: ""
+        pharmacyState = pharmacyState.copy(
+            selectedProvinceKey = provinceKey,
+            selectedDistrictKey = firstDistrict,
+        )
+        refreshPharmacies()
+    }
+
+    fun selectDistrict(districtKey: String) {
+        pharmacyState = pharmacyState.copy(selectedDistrictKey = districtKey)
+        refreshPharmacies()
+    }
+
+    fun setLocationEnabled(enabled: Boolean, location: Pair<Double, Double>?) {
+        pharmacyState = pharmacyState.copy(
+            isLocationEnabled = enabled,
+            userLocation = location,
+        )
+        refreshPharmacies()
+    }
+
+    fun togglePharmacyExpandedView(expanded: Boolean) {
+        pharmacyState = pharmacyState.copy(isExpandedView = expanded)
+    }
+
+    fun refreshPharmacies() {
+        val st = pharmacyState
+        val userLoc = st.userLocation
+        val list = SriLankaLocations.findPharmaciesSorted(
+            userLat = userLoc?.first,
+            userLon = userLoc?.second,
+            provinceKey = st.selectedProvinceKey,
+            districtKey = st.selectedDistrictKey,
+        )
+        pharmacyState = pharmacyState.copy(pharmacyList = list)
     }
 }
