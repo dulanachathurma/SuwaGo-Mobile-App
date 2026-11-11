@@ -558,18 +558,22 @@ fun PharmacyCardLarge(
                 Surface(
                     shape = RoundedCornerShape(50),
                     color = Teal50,
+                    modifier = Modifier.weight(1f, fill = false),
                 ) {
                     Text(
                         text = "📏 " + String.format(Locale.US, "%.1f km away", pharmacy.distanceKm),
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         color = Teal700,
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                        maxLines = 1,
                     )
                 }
 
+                Spacer(Modifier.width(4.dp))
+
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     SmallPill(

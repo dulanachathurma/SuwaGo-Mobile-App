@@ -26,6 +26,7 @@
     <string name="pharmacy_modeGps">எனது இருப்பிடம்</string>
     <string name="pharmacy_modeDistrict">மாவட்டம் மூலம்</string>
     <string name="pharmacy_open">திறந்துள்ளது</string>
+    <string name="pharmacy_call">அழைக்கவும்</string>
     <string name="feature_reminders">மருந்து நினைவூட்டல்கள்</string>
     <string name="feature_reminders_desc">உங்கள் தினசரி மாத்திரைகளை தவறவிடாதீர்கள்</string>
     <string name="feature_reports">ஆய்வக அறிக்கைகள்</string>

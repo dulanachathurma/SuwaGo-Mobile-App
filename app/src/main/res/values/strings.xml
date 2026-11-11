@@ -26,6 +26,7 @@
     <string name="pharmacy_modeGps">Use GPS Location</string>
     <string name="pharmacy_modeDistrict">By Province &amp; District</string>
     <string name="pharmacy_open">Open Now</string>
+    <string name="pharmacy_call">Call</string>
     <string name="feature_reminders">Medicine Reminders</string>
     <string name="feature_reminders_desc">Never Miss Your Daily Pills</string>
     <string name="feature_reports">Lab Reports</string>
