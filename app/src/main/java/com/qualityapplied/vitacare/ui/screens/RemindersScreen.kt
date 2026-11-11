@@ -1,6 +1,6 @@
 package com.qualityapplied.vitacare.ui.screens
 
-import android.app.TimePickerDialog
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.qualityapplied.vitacare.ui.showTimePickerSafe
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -225,23 +226,20 @@ private fun AddReminderDialog(
     var loading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf("") }
 
-    // Native Clock TimePickerDialog for selecting custom alarm time
-    val timePickerDialog = remember {
+    val openCustomTimePicker = {
         val cal = Calendar.getInstance()
-        TimePickerDialog(
-            context,
-            { _, hourOfDay, minute ->
-                val calendarCal = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    set(Calendar.MINUTE, minute)
-                }
-                val formattedTime = SimpleDateFormat("hh:mm a", Locale.US).format(calendarCal.time)
-                selectedTime = formattedTime
-            },
-            cal.get(Calendar.HOUR_OF_DAY),
-            cal.get(Calendar.MINUTE),
-            false, // 12-hour format with AM/PM
-        )
+        showTimePickerSafe(
+            context = context,
+            initialHour = cal.get(Calendar.HOUR_OF_DAY),
+            initialMinute = cal.get(Calendar.MINUTE),
+            is24Hour = false,
+        ) { hourOfDay, minute ->
+            val calendarCal = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, hourOfDay)
+                set(Calendar.MINUTE, minute)
+            }
+            selectedTime = SimpleDateFormat("hh:mm a", Locale.US).format(calendarCal.time)
+        }
     }
 
     AlertDialog(
@@ -265,7 +263,7 @@ private fun AddReminderDialog(
                         modifier = Modifier.weight(1f),
                     )
                     Spacer(Modifier.width(6.dp))
-                    SmallPill("⏰ Custom Time", onClick = { timePickerDialog.show() }, background = Teal50, textColor = Teal700)
+                    SmallPill("⏰ Custom Time", onClick = openCustomTimePicker, background = Teal50, textColor = Teal700)
                 }
 
                 Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -278,7 +276,7 @@ private fun AddReminderDialog(
                     }
                     if (!times.contains(selectedTime)) {
                         Row(modifier = Modifier.padding(top = 2.dp)) {
-                            ChoiceChip("⏰ $selectedTime (Custom)", selected = true, onClick = { timePickerDialog.show() })
+                            ChoiceChip("⏰ $selectedTime (Custom)", selected = true, onClick = openCustomTimePicker)
                         }
                     }
                 }
