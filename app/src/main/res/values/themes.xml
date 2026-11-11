@@ -4,6 +4,8 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@color/splash_bg</item>
+        <item name="android:datePickerDialogTheme">@style/Theme.AppCompat.Light.Dialog</item>
+        <item name="android:timePickerDialogTheme">@style/Theme.AppCompat.Light.Dialog</item>
     </style>
 
     <!-- Splash Screen theme for Android 12+ (API 31+) and core-splashscreen -->
