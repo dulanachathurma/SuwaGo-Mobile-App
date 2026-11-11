@@ -51,6 +51,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import com.qualityapplied.vitacare.ui.components.NearbyPharmaciesCard
 import com.qualityapplied.vitacare.ui.launchDialerSafe
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -198,7 +199,7 @@ fun DashboardScreen(
         BarrelRollBannerCarousel()
 
         // 3D Feature Cards (Placed directly below top promo banner slider & above BMI section)
-        FeatureCardsSection(onOpenMetrics, onOpenReminders, onOpenVault)
+        FeatureCardsSection(vm, onOpenReminders, onOpenVault)
 
         // BMI card
         SectionCard {
@@ -615,7 +616,7 @@ private fun SosEmergencyButton() {
 
 @Composable
 private fun FeatureCardsSection(
-    onOpenMetrics: () -> Unit,
+    vm: AppViewModel,
     onOpenReminders: () -> Unit,
     onOpenVault: () -> Unit,
 ) {
@@ -623,11 +624,9 @@ private fun FeatureCardsSection(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        Feature3DCard(
-            title = tr("feature.vitals"),
-            imageRes = R.drawable.feature_vitals,
+        NearbyPharmaciesCard(
+            vm = vm,
             modifier = Modifier.weight(1f),
-            onClick = onOpenMetrics,
         )
         Feature3DCard(
             title = tr("feature.reminders"),
