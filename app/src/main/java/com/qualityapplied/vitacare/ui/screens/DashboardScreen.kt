@@ -106,7 +106,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DashboardScreen(
     vm: AppViewModel,
-    onOpenMetrics: () -> Unit = {},
+    onOpenPharmacies: () -> Unit = {},
     onOpenReminders: () -> Unit = {},
     onOpenVault: () -> Unit = {},
 ) {
@@ -199,7 +199,7 @@ fun DashboardScreen(
         BarrelRollBannerCarousel()
 
         // 3D Feature Cards (Placed directly below top promo banner slider & above BMI section)
-        FeatureCardsSection(vm, onOpenReminders, onOpenVault)
+        FeatureCardsSection(vm, onOpenPharmacies, onOpenReminders, onOpenVault)
 
         // BMI card
         SectionCard {
@@ -617,6 +617,7 @@ private fun SosEmergencyButton() {
 @Composable
 private fun FeatureCardsSection(
     vm: AppViewModel,
+    onOpenPharmacies: () -> Unit,
     onOpenReminders: () -> Unit,
     onOpenVault: () -> Unit,
 ) {
@@ -624,9 +625,11 @@ private fun FeatureCardsSection(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        NearbyPharmaciesCard(
-            vm = vm,
+        Feature3DCard(
+            title = tr("pharmacy.title"),
+            imageRes = R.drawable.feature_vitals,
             modifier = Modifier.weight(1f),
+            onClick = onOpenPharmacies,
         )
         Feature3DCard(
             title = tr("feature.reminders"),
