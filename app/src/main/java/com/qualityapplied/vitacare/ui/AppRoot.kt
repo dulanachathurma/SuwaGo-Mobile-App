@@ -59,6 +59,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -457,11 +458,11 @@ private fun MainFlow(
         },
         containerColor = Slate50,
     ) { innerPadding ->
-        // Apply Scaffold innerPadding to handle top bar, bottom bar, and system insets gracefully
+        // Apply top padding so main content scrolls right down to the top edge of the green bar without a white background container layer
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(top = innerPadding.calculateTopPadding()),
         ) {
             if (showNotifications) {
                 NotificationsScreen(onBack = { onShowNotifications(false) })
@@ -586,7 +587,7 @@ fun ThreeDotsPulseLoading(
  * Custom Shape featuring a deeper concave cutout notch using Path and Shape.
  */
 class NotchedBottomBarShape(
-    private val cutoutRadius: Dp = 55.dp,
+    private val cutoutRadius: Dp = 39.dp,
 ) : Shape {
     override fun createOutline(
         size: Size,
@@ -595,24 +596,24 @@ class NotchedBottomBarShape(
     ): Outline {
         val path = Path().apply {
             val r = with(density) { cutoutRadius.toPx() }
-            val depth = r * 1.35f
             val cx = size.width / 2f
-            val cutoutWidth = r * 2.4f
-            val startX = cx - cutoutWidth / 2f
-            val endX = cx + cutoutWidth / 2f
 
             moveTo(0f, 0f)
-            lineTo(startX, 0f)
-            cubicTo(
-                cx - r * 0.75f, 0f,
-                cx - r * 0.65f, depth,
-                cx, depth,
+            // Flat top line to start of center notch
+            lineTo(cx - r, 0f)
+            // Tight, smooth semi-circular cradle notch cutout
+            arcTo(
+                rect = Rect(
+                    left = cx - r,
+                    top = -r,
+                    right = cx + r,
+                    bottom = r,
+                ),
+                startAngleDegrees = 180f,
+                sweepAngleDegrees = -180f,
+                forceMoveTo = false,
             )
-            cubicTo(
-                cx + r * 0.65f, depth,
-                cx + r * 0.75f, 0f,
-                endX, 0f,
-            )
+            // Flat top line to right corner
             lineTo(size.width, 0f)
             lineTo(size.width, size.height)
             lineTo(0f, size.height)
@@ -650,10 +651,10 @@ fun SuwaGoBottomBar(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.BottomCenter,
         ) {
-            // Main Bottom Bar Surface with Custom Deeper Concave Cutout Notch Shape & #00897B Background Color
+            // Main Bottom Bar Surface with Custom Semi-Circular Cutout Notch Shape & #00897B Background Color
             Surface(
                 color = Color(0xFF00897B),
-                shape = BottomBarCurvedShape(cutoutRadius = 55.dp),
+                shape = BottomBarCurvedShape(cutoutRadius = 39.dp),
                 shadowElevation = 8.dp,
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -682,19 +683,19 @@ fun SuwaGoBottomBar(
                 }
             }
 
-            // Center Elevated Suwa AI Floating Action Button inside Cutout Notch (-30.dp Y-offset)
+            // Center Elevated Suwa AI Floating Action Button inside Cutout Notch
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .offset(y = (-30).dp)
+                    .offset(y = (-40).dp)
                     .clickable(onClick = { onTabSelected(2) }),
             ) {
                 Surface(
                     shape = CircleShape,
                     color = Color.White,
-                    shadowElevation = 8.dp,
+                    shadowElevation = 6.dp,
                     modifier = Modifier
-                        .size(62.dp)
+                        .size(70.dp)
                         .border(
                             width = 2.5.dp,
                             color = if (currentTab == 2 && !showNotifications && activeOverlay == null) Color(0xFF10B981) else Color(0xFF00897B),
@@ -709,20 +710,24 @@ fun SuwaGoBottomBar(
                             painter = painterResource(R.drawable.ai_logo),
                             contentDescription = tr("nav.ai"),
                             modifier = Modifier
-                                .size(54.dp)
+                                .size(60.dp)
                                 .clip(CircleShape),
                             contentScale = ContentScale.Fit,
                         )
                     }
                 }
-                Spacer(Modifier.height(1.dp))
-                Text(
-                    text = tr("nav.ai"),
-                    fontSize = 10.5.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                )
             }
+
+            // "Suwa AI" text clearly positioned inside the green navigation bar below the notch
+            Text(
+                text = tr("nav.ai"),
+                fontSize = 11.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White,
+                modifier = Modifier
+                    .offset(y = (-4).dp)
+                    .clickable(onClick = { onTabSelected(2) }),
+            )
         }
 
         // Dedicated System Navigation Bar Scrim Below
