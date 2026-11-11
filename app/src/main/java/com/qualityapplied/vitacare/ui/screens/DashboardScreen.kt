@@ -51,6 +51,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import com.qualityapplied.vitacare.ui.launchDialerSafe
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -132,7 +133,10 @@ fun DashboardScreen(
     val latest = logs.lastOrNull()
 
     Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 90.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         // Greeting
@@ -332,7 +336,14 @@ private fun RowScope.Segment(weight: Float, color: Color) {
 
 @Composable
 private fun BarrelRollBannerCarousel() {
-    val banners = remember { listOf(R.drawable.home_banner, R.drawable.home_banner_2, R.drawable.home_banner_3) }
+    val banners = remember {
+        listOf(
+            R.drawable.home_banner,
+            R.drawable.home_banner_2,
+            R.drawable.home_banner_3,
+            R.drawable.home_banner_4,
+        )
+    }
     val bannerCount = banners.size
     val progress = remember { Animatable(0f) }
     var isDragging by remember { mutableStateOf(false) }
@@ -343,15 +354,15 @@ private fun BarrelRollBannerCarousel() {
     val rawProgress = progress.value
     val activeIndex = ((kotlin.math.round(rawProgress).toInt() % bannerCount) + bannerCount) % bannerCount
 
-    // Automatically cycle every 2.0 seconds (2s) with a smooth 650ms 3D rotation animation
+    // Automatically cycle every 1.5 seconds (1.5s) with a smooth 650ms 3D rotation animation
     LaunchedEffect(isDragging) {
         if (!isDragging) {
             while (true) {
-                delay(2000)
+                delay(1500)
                 val target = progress.value + 1f
                 progress.animateTo(
                     targetValue = target,
-                    animationSpec = tween(durationMillis = 650, easing = FastOutSlowInEasing)
+                    animationSpec = tween(durationMillis = 650, easing = FastOutSlowInEasing),
                 )
             }
         }
@@ -449,12 +460,12 @@ private fun BarrelRollBannerCarousel() {
                         onClick = {
                             coroutineScope.launch {
                                 val currentTarget = kotlin.math.round(progress.value)
-                                var diff = index - (currentTarget.toInt() % bannerCount)
-                                if (diff < -1) diff += 3
-                                if (diff > 1) diff -= 3
+                                var diff = (index - (currentTarget.toInt() % bannerCount)) % bannerCount
+                                if (diff < -bannerCount / 2) diff += bannerCount
+                                if (diff > bannerCount / 2) diff -= bannerCount
                                 progress.animateTo(
                                     targetValue = currentTarget + diff,
-                                    animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
+                                    animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
                                 )
                             }
                         }
@@ -539,8 +550,7 @@ private fun SosEmergencyButton() {
             .fillMaxWidth()
             .wrapContentHeight() // Compact wrapContentHeight to prevent excessive vertical real estate
             .clickable {
-                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:1990"))
-                context.startActivity(intent)
+                launchDialerSafe(context, "1990")
             },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Rose600),
