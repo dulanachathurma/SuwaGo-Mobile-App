@@ -43,7 +43,27 @@ object LocaleManager {
         val config = Configuration(context.resources.configuration)
         config.setLocale(locale)
         config.setLayoutDirection(locale)
-        return context.createConfigurationContext(config)
+        val configContext = context.createConfigurationContext(config)
+        return LocalizedContextWrapper(context, configContext)
+    }
+}
+
+/**
+ * A ContextWrapper that preserves the base Activity context so that
+ * Context.findActivity() can resolve the host Activity even when
+ * LocalContext is overridden by localizedContext.
+ */
+class LocalizedContextWrapper(
+    val baseActivityContext: Context,
+    configContext: Context,
+) : android.content.ContextWrapper(configContext) {
+    fun findActivity(): android.app.Activity? {
+        var c: Context? = baseActivityContext
+        while (c is android.content.ContextWrapper) {
+            if (c is android.app.Activity) return c
+            c = c.baseContext
+        }
+        return null
     }
 }
 
