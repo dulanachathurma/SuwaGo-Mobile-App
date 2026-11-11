@@ -95,6 +95,7 @@ import com.qualityapplied.vitacare.ui.screens.DoctorScreen
 import com.qualityapplied.vitacare.ui.screens.LabReportVaultScreen
 import com.qualityapplied.vitacare.ui.screens.LoginScreen
 import com.qualityapplied.vitacare.ui.screens.MetricsScreen
+import com.qualityapplied.vitacare.ui.screens.NearbyPharmaciesScreen
 import com.qualityapplied.vitacare.ui.screens.NotificationsScreen
 import com.qualityapplied.vitacare.ui.screens.ProfileScreen
 import com.qualityapplied.vitacare.ui.screens.RemindersScreen
@@ -475,12 +476,13 @@ private fun MainFlow(
                     })
                     "reminders" -> RemindersScreen()
                     "vault" -> LabReportVaultScreen()
+                    "pharmacies" -> NearbyPharmaciesScreen(vm, onBack = { activeOverlay = null })
                 }
             } else {
                 when (tab) {
                     0 -> DashboardScreen(
                         vm = vm,
-                        onOpenMetrics = { tab = 3 },
+                        onOpenPharmacies = { activeOverlay = "pharmacies" },
                         onOpenReminders = { activeOverlay = "reminders" },
                         onOpenVault = { activeOverlay = "vault" },
                     )
