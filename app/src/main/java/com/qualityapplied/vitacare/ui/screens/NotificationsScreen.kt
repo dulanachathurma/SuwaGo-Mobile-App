@@ -1,7 +1,7 @@
 package com.qualityapplied.vitacare.ui.screens
 
 import android.Manifest
-import android.app.TimePickerDialog
+
 import android.content.pm.PackageManager
 import android.os.Build
 import android.text.format.DateUtils
@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.qualityapplied.vitacare.ui.showTimePickerSafe
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -132,11 +133,16 @@ fun NotificationsScreen(onBack: () -> Unit) {
                 ) {
                     Text(tr("notif.time"), fontSize = 13.sp, color = Slate600)
                     SmallPill("⏰ " + String.format(Locale.US, "%02d:%02d", hour, minute), onClick = {
-                        TimePickerDialog(context, { _, h, m ->
+                        showTimePickerSafe(
+                            context = context,
+                            initialHour = hour,
+                            initialMinute = minute,
+                            is24Hour = true,
+                        ) { h, m ->
                             hour = h
                             minute = m
                             NotificationCenter.setDailyTime(context, h, m)
-                        }, hour, minute, true).show()
+                        }
                     })
                 }
             }
