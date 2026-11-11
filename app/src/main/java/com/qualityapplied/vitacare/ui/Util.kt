@@ -1,15 +1,23 @@
 package com.qualityapplied.vitacare.ui
 
+import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.util.Base64
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import com.qualityapplied.vitacare.data.LocalizedContextWrapper
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -96,4 +104,105 @@ fun decodeDataUrl(dataUrl: String): Bitmap? = try {
     BitmapFactory.decodeByteArray(raw, 0, raw.size)
 } catch (_: Exception) {
     null
+}
+
+/**
+ * Safely resolves the host Activity from any Context (including LocalizedContextWrapper).
+ */
+fun Context.findActivity(): Activity? {
+    var ctx: Context? = this
+    while (ctx != null) {
+        if (ctx is Activity) return ctx
+        if (ctx is LocalizedContextWrapper) {
+            val act = ctx.findActivity()
+            if (act != null) return act
+        }
+        ctx = if (ctx is ContextWrapper) ctx.baseContext else null
+    }
+    return null
+}
+
+/**
+ * Safely displays a DatePickerDialog using the valid Activity context to prevent crashes.
+ */
+fun showDatePickerSafe(
+    context: Context,
+    initialYear: Int,
+    initialMonth: Int,
+    initialDay: Int,
+    onDateSelected: (year: Int, month: Int, dayOfMonth: Int) -> Unit,
+) {
+    val activity = context.findActivity()
+    if (activity == null || activity.isFinishing || activity.isDestroyed) {
+        return
+    }
+    try {
+        DatePickerDialog(
+            activity,
+            { _, year, month, dayOfMonth ->
+                onDateSelected(year, month, dayOfMonth)
+            },
+            initialYear,
+            initialMonth,
+            initialDay,
+        ).show()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+/**
+ * Safely displays a TimePickerDialog using the valid Activity context to prevent crashes.
+ */
+fun showTimePickerSafe(
+    context: Context,
+    initialHour: Int,
+    initialMinute: Int,
+    is24Hour: Boolean = false,
+    onTimeSelected: (hourOfDay: Int, minute: Int) -> Unit,
+) {
+    val activity = context.findActivity()
+    if (activity == null || activity.isFinishing || activity.isDestroyed) {
+        return
+    }
+    try {
+        TimePickerDialog(
+            activity,
+            { _, hourOfDay, minute ->
+                onTimeSelected(hourOfDay, minute)
+            },
+            initialHour,
+            initialMinute,
+            is24Hour,
+        ).show()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+/**
+ * Safely launches the system phone dialer with the specified phone number (e.g., "1990").
+ * Uses Intent.ACTION_DIAL which does not require CALL_PHONE runtime permissions.
+ * Includes Activity check, FLAG_ACTIVITY_NEW_TASK, and try-catch for ActivityNotFoundException & SecurityException.
+ */
+fun launchDialerSafe(context: Context, phoneNumber: String = "1990") {
+    try {
+        val uri = Uri.parse("tel:$phoneNumber")
+        val intent = Intent(Intent.ACTION_DIAL, uri).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        val activity = context.findActivity()
+        if (activity != null && !activity.isFinishing && !activity.isDestroyed) {
+            activity.startActivity(intent)
+        } else {
+            context.startActivity(intent)
+        }
+    } catch (_: ActivityNotFoundException) {
+        Toast.makeText(context, "No phone app available to make calls", Toast.LENGTH_SHORT).show()
+    } catch (_: SecurityException) {
+        Toast.makeText(context, "Permission denied for phone dialer", Toast.LENGTH_SHORT).show()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        Toast.makeText(context, "Could not open phone app", Toast.LENGTH_SHORT).show()
+    }
 }
