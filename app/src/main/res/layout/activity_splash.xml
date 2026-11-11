@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/splashRoot"
@@ -7,81 +7,195 @@
     android:layout_height="match_parent"
     android:background="#0F172A">
 
-    <!-- 1. Background Image (Dark Medical Photography Style) -->
+    <!-- 1. Background Setup -->
     <ImageView
-        android:id="@+id/ivDarkMedicalBg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/bgImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash_bg"
-        tools:src="@drawable/splash_bg" />
+        android:src="@drawable/dark_medical_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/dark_medical_bg" />
 
-    <!-- 2. Dark Scrim / Gradient Overlay to maintain dark ambient photography look -->
+    <!-- Dark Overlay (50% Black Tint) -->
     <View
-        android:id="@+id/viewDarkScrim"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#990F172A" />
+        android:id="@+id/darkOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#80000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 3. Center Branding Container (Stethoscope + "suwago" Text) -->
-    <LinearLayout
-        android:id="@+id/llCenterBranding"
+    <!-- Guideline for Bottom Typography Placement -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.74" />
 
-        <ImageView
-            android:id="@+id/ivStethoscopeLogo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:contentDescription="SuwaGo Stethoscope Logo"
-            android:scaleType="fitCenter"
-            android:src="@drawable/vitacare_logo"
-            tools:src="@drawable/vitacare_logo" />
+    <!-- 2. Center Branding (Logo & Title) -->
+    <!-- Image 1: 3D Stethoscope Logo -->
+    <ImageView
+        android:id="@+id/imgStethoscope"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:contentDescription="SuwaGo Stethoscope Logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/vitacare_logo"
+        app:layout_constraintBottom_toTopOf="@+id/imgSuwagoText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/vitacare_logo" />
 
-        <!-- "suwago" PNG text logo - kept completely vibrant, bright, and untouched with original colors -->
-        <ImageView
-            android:id="@+id/ivSuwagoTextLogo"
-            android:layout_width="220dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="suwago"
-            android:scaleType="fitCenter" />
-    </LinearLayout>
-
-    <!-- 4. Bottom Typography (Sinhala Tagline & Secondary Subtitle) -->
+    <!-- Image 2: Unified SuwaGo Text Logo Container -->
     <LinearLayout
-        android:id="@+id/llBottomTypography"
+        android:id="@+id/imgSuwagoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="48dp"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgStethoscope">
 
+        <!-- Container for "suwa" with Green Leaf 🍃 directly above 'w' and 'a' -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Green leaf floating directly between 'w' and 'a' -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- "suw" in electric blue -->
+                <TextView
+                    android:id="@+id/tvSuw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="-0.04"
+                    android:text="suw"
+                    android:textColor="#0066FF"
+                    android:textSize="100sp"
+                    android:textStyle="bold" />
+
+                <!-- "a" in electric blue -->
+                <TextView
+                    android:id="@+id/tvA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="-0.04"
+                    android:text="a"
+                    android:textColor="#0066FF"
+                    android:textSize="100sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- "g" in vibrant red -->
         <TextView
-            android:id="@+id/tvTaglineSinhala"
+            android:id="@+id/tvG"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="නීරෝගී ජීවිතයකට"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="-0.04"
+            android:text="g"
+            android:textColor="#E50914"
+            android:textSize="100sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvTaglineEnglish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:text="Your Personal Health Companion"
-            android:textColor="#9CA3AF"
-            android:textSize="13sp" />
+        <!-- "o" red circular badge with white center and stethoscope icon -->
+        <FrameLayout
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_red_circle">
+
+            <FrameLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_white_circle">
+
+                <ImageView
+                    android:layout_width="66dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/vitacare_logo" />
+            </FrameLayout>
+        </FrameLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    <!-- 3-Dots Pulsing Loading Animation (Accent Pink #E91E63) -->
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeDotsLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtSinhalaTagline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgSuwagoText" />
+
+    <!-- 3. Bottom Typography -->
+    <!-- Primary Sinhala Tagline (Set to 40sp with AutoSize) -->
+    <TextView
+        android:id="@+id/txtSinhalaTagline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="නීරෝගී ජීවිතයකට"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:autoSizeMaxTextSize="40sp"
+        app:autoSizeMinTextSize="18sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_bottom" />
+
+    <!-- Secondary English Tagline -->
+    <TextView
+        android:id="@+id/txtEnglishTagline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Your Personal Health Companion"
+        android:textColor="#E5E7EB"
+        android:textSize="18sp"
+        app:autoSizeMaxTextSize="20sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSinhalaTagline" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

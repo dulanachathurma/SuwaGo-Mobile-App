@@ -1,8 +1,11 @@
 package com.qualityapplied.vitacare.ui.components
 
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Canvas
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import com.qualityapplied.vitacare.R
+import com.qualityapplied.vitacare.data.LocaleManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -99,9 +102,11 @@ fun AppTextField(
             trailingIcon = if (password) {
                 {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Text(
-                            text = if (passwordVisible) "👁️" else "🙈",
-                            fontSize = 16.sp,
+                        Icon(
+                            painter = painterResource(if (passwordVisible) R.drawable.ic_eye_visible else R.drawable.ic_eye_off),
+                            contentDescription = if (passwordVisible) "Hide password" else "Show password",
+                            tint = Slate500,
+                            modifier = Modifier.size(22.dp),
                         )
                     }
                 }
@@ -261,12 +266,16 @@ fun ChoiceChip(text: String, selected: Boolean, onClick: () -> Unit) {
 @Composable
 fun Avatar(avatarUrl: String, name: String, size: Dp) {
     val bitmap by produceState<ImageBitmap?>(null, avatarUrl) {
-        value = when {
-            avatarUrl.startsWith("data:image") -> decodeDataUrl(avatarUrl)?.asImageBitmap()
-            avatarUrl.startsWith("http") -> ApiClient.fetchBytes(avatarUrl)?.let {
-                BitmapFactory.decodeByteArray(it, 0, it.size)?.asImageBitmap()
+        value = try {
+            when {
+                avatarUrl.startsWith("data:image") -> decodeDataUrl(avatarUrl)?.asImageBitmap()
+                avatarUrl.startsWith("http") -> ApiClient.fetchBytes(avatarUrl)?.let {
+                    BitmapFactory.decodeByteArray(it, 0, it.size)?.asImageBitmap()
+                }
+                else -> null
             }
-            else -> null
+        } catch (_: Throwable) {
+            null
         }
     }
     val bmp = bitmap
@@ -300,8 +309,8 @@ fun Avatar(avatarUrl: String, name: String, size: Dp) {
  */
 @Composable
 fun LanguageSwitcher(modifier: Modifier = Modifier) {
-    val lang = LocalConfiguration.current.locales[0].language
-    val current = if (lang == "si" || lang == "ta") lang else "en"
+    val context = LocalContext.current
+    val current = LocaleManager.currentLocale
     var expanded by remember { mutableStateOf(false) }
 
     val languages = remember {
@@ -369,7 +378,7 @@ fun LanguageSwitcher(modifier: Modifier = Modifier) {
                     onClick = {
                         expanded = false
                         if (!selected) {
-                            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(code))
+                            LocaleManager.setLocale(context, code)
                         }
                     },
                 )

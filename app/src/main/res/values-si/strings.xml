@@ -22,6 +22,7 @@
     <string name="auth_register">ලියාපදිංචි වන්න</string>
     <string name="auth_email">ඊමේල්</string>
     <string name="auth_password">මුරපදය</string>
+    <string name="auth_confirmPassword">තහවුරු කිරීමේ මුරපදය</string>
     <string name="auth_name">සම්පූර්ණ නම</string>
     <string name="auth_noAccount">ගිණුමක් නැද්ද?</string>
     <string name="auth_haveAccount">දැනටමත් ගිණුමක් තිබේද?</string>
@@ -61,7 +62,10 @@
     <string name="doctor_disclaimer">මෙය වෛද්‍ය රෝග විනිශ්චයක් නොවේ. සෑම විටම සුදුසුකම් ලත් වෛද්‍යවරයකු හමුවන්න.</string>
     <string name="doctor_reset">නැවත ආරම්භ කරන්න</string>
     <string name="common_loading">පූරණය වෙමින්...</string>
-    <string name="err_MISSING_FIELDS">කරුණාකර සියලු ක්ෂේත්‍ර පුරවන්න (මුරපදය අකුරු 6ක් හෝ වැඩි විය යුතුය).</string>
+    <string name="err_MISSING_FIELDS">කරුණාකර සියලු ක්ෂේත්‍ර පුරවන්න.</string>
+    <string name="err_PASSWORD_MIN_LENGTH">මුරපදය අවම වශයෙන් අක්ෂර 8ක් දිග විය යුතුය.</string>
+    <string name="err_PASSWORD_NO_LOWERCASE">මුරපදයේ අවම වශයෙන් එක් කුඩා ඉංග්‍රීසි අකුරක් (a-z) තිබිය යුතුය.</string>
+    <string name="err_PASSWORD_NO_UPPER_OR_NUMBER">මුරපදයේ මහ අකුරක් (A-Z) හෝ අංකයක් (0-9) තිබිය යුතුය.</string>
     <string name="err_EMAIL_EXISTS">මෙම ඊමේල් ලිපිනය දැනටමත් ලියාපදිංචි වී ඇත.</string>
     <string name="err_INVALID_CREDENTIALS">ඊමේල් හෝ මුරපදය වැරදියි.</string>
     <string name="err_AUTH_REQUIRED">කරුණාකර නැවත පිවිසෙන්න.</string>

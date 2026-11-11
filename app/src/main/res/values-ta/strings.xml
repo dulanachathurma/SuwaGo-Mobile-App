@@ -22,6 +22,7 @@
     <string name="auth_register">பதிவு செய்</string>
     <string name="auth_email">மின்னஞ்சல்</string>
     <string name="auth_password">கடவுச்சொல்</string>
+    <string name="auth_confirmPassword">கடவுச்சொல்லை உறுதிசெய்</string>
     <string name="auth_name">முழு பெயர்</string>
     <string name="auth_noAccount">கணக்கு இல்லையா?</string>
     <string name="auth_haveAccount">ஏற்கனவே கணக்கு உள்ளதா?</string>
@@ -61,7 +62,10 @@
     <string name="doctor_disclaimer">இது மருத்துவ நோயறிதல் அல்ல. எப்போதும் தகுதிவாய்ந்த மருத்துவரை அணுகவும்.</string>
     <string name="doctor_reset">மீண்டும் தொடங்கு</string>
     <string name="common_loading">ஏற்றுகிறது...</string>
-    <string name="err_MISSING_FIELDS">அனைத்து புலங்களையும் நிரப்பவும் (கடவுச்சொல் 6+ எழுத்துகள் தேவை).</string>
+    <string name="err_MISSING_FIELDS">அனைத்து புலங்களையும் நிரப்பவும்.</string>
+    <string name="err_PASSWORD_MIN_LENGTH">கடவுச்சொல் குறைந்தது 8 எழுத்துகள் நீளமாக இருக்க வேண்டும்.</string>
+    <string name="err_PASSWORD_NO_LOWERCASE">கடவுச்சொல்லில் குறைந்தது ஒரு சிறிய ஆங்கில எழுத்து (a-z) இருக்க வேண்டும்.</string>
+    <string name="err_PASSWORD_NO_UPPER_OR_NUMBER">கடவுச்சொல்லில் ஒரு பெரிய ஆங்கில எழுத்து (A-Z) அல்லது எண் (0-9) இருக்க வேண்டும்.</string>
     <string name="err_EMAIL_EXISTS">இந்த மின்னஞ்சல் ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது.</string>
     <string name="err_INVALID_CREDENTIALS">மின்னஞ்சல் அல்லது கடவுச்சொல் தவறு.</string>
     <string name="err_AUTH_REQUIRED">மீண்டும் உள்நுழையவும்.</string>

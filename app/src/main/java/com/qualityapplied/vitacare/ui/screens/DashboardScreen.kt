@@ -2,11 +2,13 @@ package com.qualityapplied.vitacare.ui.screens
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -45,19 +47,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.qualityapplied.vitacare.R
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import com.qualityapplied.vitacare.data.ApiClient
 import com.qualityapplied.vitacare.data.HealthLog
 import com.qualityapplied.vitacare.data.clean
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.sin
 import com.qualityapplied.vitacare.ui.AppViewModel
 import com.qualityapplied.vitacare.ui.components.AppTextField
 import com.qualityapplied.vitacare.ui.components.Avatar
@@ -178,8 +190,8 @@ fun DashboardScreen(
         // 1990 SOS Emergency Call Button
         SosEmergencyButton()
 
-        // Hero Banner Card Auto Slider (2s interval)
-        AutoBannerSlider()
+        // 3D Barrel Roll / Cylinder Animation Banner Carousel (3.5s auto cycle & touch swipe)
+        BarrelRollBannerCarousel()
 
         // 3D Feature Cards (Placed directly below top promo banner slider & above BMI section)
         FeatureCardsSection(onOpenMetrics, onOpenReminders, onOpenVault)
@@ -319,57 +331,198 @@ private fun RowScope.Segment(weight: Float, color: Color) {
 }
 
 @Composable
-private fun AutoBannerSlider() {
+private fun BarrelRollBannerCarousel() {
     val banners = remember { listOf(R.drawable.home_banner, R.drawable.home_banner_2, R.drawable.home_banner_3) }
-    var currentIndex by remember { mutableIntStateOf(0) }
+    val bannerCount = banners.size
+    val progress = remember { Animatable(0f) }
+    var isDragging by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+    val density = LocalDensity.current
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(2000)
-            currentIndex = (currentIndex + 1) % banners.size
+    // Calculate current active index from progress
+    val rawProgress = progress.value
+    val activeIndex = ((kotlin.math.round(rawProgress).toInt() % bannerCount) + bannerCount) % bannerCount
+
+    // Automatically cycle every 2.0 seconds (2s) with a smooth 650ms 3D rotation animation
+    LaunchedEffect(isDragging) {
+        if (!isDragging) {
+            while (true) {
+                delay(2000)
+                val target = progress.value + 1f
+                progress.animateTo(
+                    targetValue = target,
+                    animationSpec = tween(durationMillis = 650, easing = FastOutSlowInEasing)
+                )
+            }
         }
     }
 
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        shadowElevation = 6.dp,
-        tonalElevation = 2.dp,
-        color = Color.White,
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
     ) {
-        Box(modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f)) {
-            Crossfade(
-                targetState = currentIndex,
-                animationSpec = tween(600),
-                label = "bannerCrossfade",
-            ) { targetIndex ->
-                Image(
-                    painter = painterResource(banners[targetIndex]),
-                    contentDescription = "VitCare Banner",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(16.dp)),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-            Row(
+        val containerWidth = maxWidth
+        val cardWidth = containerWidth * 0.82f
+        val cardHeight = cardWidth * (9f / 16f)
+        val maxDragPx = with(density) { (containerWidth * 0.60f).toPx() }
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // 3D Circular Ring Carousel Container
+            Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 10.dp),
+                    .fillMaxWidth()
+                    .height(cardHeight + 12.dp)
+                    .pointerInput(Unit) {
+                        detectHorizontalDragGestures(
+                            onDragStart = { isDragging = true },
+                            onDragEnd = {
+                                coroutineScope.launch {
+                                    val targetIndex = kotlin.math.round(progress.value)
+                                    progress.animateTo(
+                                        targetValue = targetIndex,
+                                        animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing)
+                                    )
+                                    isDragging = false
+                                }
+                            },
+                            onDragCancel = {
+                                coroutineScope.launch {
+                                    val targetIndex = kotlin.math.round(progress.value)
+                                    progress.animateTo(
+                                        targetValue = targetIndex,
+                                        animationSpec = tween(durationMillis = 200)
+                                    )
+                                    isDragging = false
+                                }
+                            },
+                            onHorizontalDrag = { change, dragAmount ->
+                                change.consume()
+                                coroutineScope.launch {
+                                    val delta = -dragAmount / maxDragPx
+                                    progress.snapTo(progress.value + delta)
+                                }
+                            }
+                        )
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                // Sort card indices by zIndex (depth) so background cards draw behind foreground cards
+                val sortedIndices = banners.indices.sortedBy { i ->
+                    var d = (i - (progress.value % bannerCount)) % bannerCount
+                    if (d < -bannerCount / 2f) d += bannerCount
+                    if (d > bannerCount / 2f) d -= bannerCount
+                    val angle = d * (2 * PI / bannerCount)
+                    cos(angle)
+                }
+
+                sortedIndices.forEach { index ->
+                    var d = (index - (progress.value % bannerCount)) % bannerCount
+                    if (d < -bannerCount / 2f) d += bannerCount
+                    if (d > bannerCount / 2f) d -= bannerCount
+
+                    val angle = d * (2 * PI / bannerCount)
+                    val sinVal = sin(angle).toFloat()
+                    val cosVal = cos(angle).toFloat()
+                    val normalizedCos = (cosVal + 1f) / 2f
+
+                    // 3D Cylinder Transforms
+                    val translationXPx = with(density) { (containerWidth * 0.28f).toPx() } * sinVal
+                    val rotationY = -34f * sinVal
+                    val scale = 0.76f + 0.24f * normalizedCos
+                    val alpha = (0.35f + 0.65f * normalizedCos).coerceIn(0f, 1f)
+                    val elevation = (8.dp * normalizedCos).coerceAtLeast(0.dp)
+
+                    BarrelRollCard(
+                        bannerRes = banners[index],
+                        width = cardWidth,
+                        height = cardHeight,
+                        scale = scale,
+                        rotationY = rotationY,
+                        translationXPx = translationXPx,
+                        alpha = alpha,
+                        elevation = elevation,
+                        zIndex = cosVal,
+                        onClick = {
+                            coroutineScope.launch {
+                                val currentTarget = kotlin.math.round(progress.value)
+                                var diff = index - (currentTarget.toInt() % bannerCount)
+                                if (diff < -1) diff += 3
+                                if (diff > 1) diff -= 3
+                                progress.animateTo(
+                                    targetValue = currentTarget + diff,
+                                    animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Carousel indicator dots
+            Row(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 banners.indices.forEach { index ->
-                    val active = index == currentIndex
+                    val active = index == activeIndex
                     Box(
                         modifier = Modifier
                             .height(6.dp)
-                            .width(if (active) 20.dp else 6.dp)
+                            .width(if (active) 22.dp else 6.dp)
                             .clip(CircleShape)
-                            .background(if (active) Teal600 else Color.White.copy(alpha = 0.7f)),
+                            .background(if (active) Teal600 else Slate400.copy(alpha = 0.4f))
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun BarrelRollCard(
+    bannerRes: Int,
+    width: Dp,
+    height: Dp,
+    scale: Float,
+    rotationY: Float,
+    translationXPx: Float,
+    alpha: Float,
+    elevation: Dp,
+    zIndex: Float,
+    onClick: () -> Unit
+) {
+    val density = LocalDensity.current
+
+    Surface(
+        modifier = Modifier
+            .width(width)
+            .height(height)
+            .zIndex(zIndex)
+            .graphicsLayer {
+                this.rotationY = rotationY
+                scaleX = scale
+                scaleY = scale
+                translationX = translationXPx
+                this.alpha = alpha
+                cameraDistance = 16f * density.density
+            }
+            .clickable { onClick() },
+        shape = RoundedCornerShape(16.dp),
+        shadowElevation = elevation,
+        color = Color.White
+    ) {
+        Image(
+            painter = painterResource(bannerRes),
+            contentDescription = "VitCare Banner",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
     }
 }
 

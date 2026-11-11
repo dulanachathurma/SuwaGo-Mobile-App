@@ -163,7 +163,7 @@ object NotificationCenter {
             null
         }
         val n = NotificationCompat.Builder(ctx, channel)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.vitacare_logo)
             .apply {
                 if (largeIcon != null) setLargeIcon(largeIcon)
             }

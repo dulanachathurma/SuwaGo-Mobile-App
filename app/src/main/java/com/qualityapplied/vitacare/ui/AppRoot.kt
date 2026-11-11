@@ -37,6 +37,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import android.view.LayoutInflater
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.StartOffset
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -51,14 +59,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -113,19 +131,23 @@ fun AppRoot() {
     }
 
     if (showSplash) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black),
-            contentAlignment = Alignment.Center,
-        ) {
-            Image(
-                painter = painterResource(R.drawable.splash_bg),
-                contentDescription = "SuwaGo Splash Screen",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Fit,
-            )
-        }
+        AndroidView(
+            factory = { ctx ->
+                val parent = android.widget.FrameLayout(ctx).apply {
+                    layoutParams = android.view.ViewGroup.LayoutParams(
+                        android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                        android.view.ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+                }
+                LayoutInflater.from(ctx).inflate(R.layout.activity_splash, parent, true)
+                val composeDots = parent.findViewById<ComposeView>(R.id.composeDotsLoading)
+                composeDots?.setContent {
+                    ThreeDotsPulseLoading()
+                }
+                parent
+            },
+            modifier = Modifier.fillMaxSize()
+        )
         return
     }
 
@@ -421,102 +443,17 @@ private fun MainFlow(
             )
         },
         bottomBar = {
-            val navSystemBarGradient = remember {
-                Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(0xFFFFB703), // Vibrant Amber Gold
-                        Color(0xFF10B981), // Bright Emerald Green
-                        Color(0xFF00897B), // Deep Vibrant Teal
-                    ),
-                )
-            }
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.BottomCenter,
-                ) {
-                    // Main Buttons Bar with Solid Primary Green Background (#00897B)
-                    Surface(
-                        color = Color(0xFF00897B),
-                        shadowElevation = 6.dp,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 4.dp, vertical = 4.dp),
-                            horizontalArrangement = Arrangement.SpaceAround,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            NAV_ITEMS.forEachIndexed { index, item ->
-                                if (index == 2) {
-                                    // Reserve space in row layout for Center AI FAB Button
-                                    Spacer(modifier = Modifier.width(60.dp))
-                                } else {
-                                    BottomItem(
-                                        index = index,
-                                        icon = item.icon,
-                                        label = tr(item.labelKey),
-                                        active = tab == index && !showNotifications && activeOverlay == null,
-                                        modifier = Modifier.weight(1f),
-                                        onClick = {
-                                            activeOverlay = null
-                                            if (index == 1) doctorSpec = null
-                                            onShowNotifications(false)
-                                            tab = index
-                                        },
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    // Center Elevated AI FAB Button with white background for clear logo display
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .offset(y = (-14).dp)
-                            .clickable(onClick = {
-                                activeOverlay = null
-                                onShowNotifications(false)
-                                tab = 2
-                            }),
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(62.dp)
-                                .clip(CircleShape)
-                                .background(Color.White)
-                                .border(2.5.dp, if (tab == 2 && !showNotifications && activeOverlay == null) Color(0xFF10B981) else Color(0xFF00897B), CircleShape),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Image(
-                                painter = painterResource(R.drawable.ai_logo),
-                                contentDescription = tr("nav.ai"),
-                                modifier = Modifier
-                                    .size(56.dp)
-                                    .clip(CircleShape),
-                                contentScale = ContentScale.Fit,
-                            )
-                        }
-                        Spacer(Modifier.height(1.dp))
-                        Text(
-                            tr("nav.ai"),
-                            fontSize = 10.5.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                        )
-                    }
-                }
-
-                // Dedicated Bright Gradient Scrim for ONLY the System Navigation Bar / Back Button Section Below
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                        .background(navSystemBarGradient),
-                )
-            }
+            SuwaGoBottomBar(
+                currentTab = tab,
+                showNotifications = showNotifications,
+                activeOverlay = activeOverlay,
+                onTabSelected = { index ->
+                    activeOverlay = null
+                    if (index == 1) doctorSpec = null
+                    onShowNotifications(false)
+                    tab = index
+                },
+            )
         },
         containerColor = Slate50,
     ) { innerPadding ->
@@ -580,19 +517,238 @@ private fun MainFlow(
     }
 }
 
+/**
+ * Smooth 3-dots pulsing loading animation component (Accent Pink #E91E63).
+ */
+@Composable
+fun ThreeDotsPulseLoading(
+    modifier: Modifier = Modifier,
+    dotSize: Dp = 12.dp,
+    dotColor: Color = Color(0xFFE91E63),
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "dotsPulseTransition")
+
+    val scale1 by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 1.0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 600, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse,
+            initialStartOffset = StartOffset(0),
+        ),
+        label = "dot1Scale",
+    )
+
+    val scale2 by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 1.0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 600, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse,
+            initialStartOffset = StartOffset(200),
+        ),
+        label = "dot2Scale",
+    )
+
+    val scale3 by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 1.0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 600, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse,
+            initialStartOffset = StartOffset(400),
+        ),
+        label = "dot3Scale",
+    )
+
+    val scales = listOf(scale1, scale2, scale3)
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        scales.forEach { scale ->
+            Box(
+                modifier = Modifier
+                    .size(dotSize)
+                    .graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                    }
+                    .background(color = dotColor, shape = CircleShape),
+            )
+        }
+    }
+}
+
+/**
+ * Custom Shape featuring a deeper concave cutout notch using Path and Shape.
+ */
+class NotchedBottomBarShape(
+    private val cutoutRadius: Dp = 55.dp,
+) : Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density,
+    ): Outline {
+        val path = Path().apply {
+            val r = with(density) { cutoutRadius.toPx() }
+            val depth = r * 1.35f
+            val cx = size.width / 2f
+            val cutoutWidth = r * 2.4f
+            val startX = cx - cutoutWidth / 2f
+            val endX = cx + cutoutWidth / 2f
+
+            moveTo(0f, 0f)
+            lineTo(startX, 0f)
+            cubicTo(
+                cx - r * 0.75f, 0f,
+                cx - r * 0.65f, depth,
+                cx, depth,
+            )
+            cubicTo(
+                cx + r * 0.65f, depth,
+                cx + r * 0.75f, 0f,
+                endX, 0f,
+            )
+            lineTo(size.width, 0f)
+            lineTo(size.width, size.height)
+            lineTo(0f, size.height)
+            close()
+        }
+        return Outline.Generic(path)
+    }
+}
+
+typealias BottomBarCurvedShape = NotchedBottomBarShape
+
+/**
+ * SuwaGo Bottom Navigation Bar composable.
+ */
+@Composable
+fun SuwaGoBottomBar(
+    currentTab: Int,
+    showNotifications: Boolean,
+    activeOverlay: String?,
+    onTabSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val navSystemBarGradient = remember {
+        Brush.horizontalGradient(
+            colors = listOf(
+                Color(0xFFFFB703), // Vibrant Amber Gold
+                Color(0xFF10B981), // Bright Emerald Green
+                Color(0xFF00897B), // Deep Vibrant Teal
+            ),
+        )
+    }
+
+    Column(modifier = modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.BottomCenter,
+        ) {
+            // Main Bottom Bar Surface with Custom Deeper Concave Cutout Notch Shape & #00897B Background Color
+            Surface(
+                color = Color(0xFF00897B),
+                shape = BottomBarCurvedShape(cutoutRadius = 55.dp),
+                shadowElevation = 8.dp,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 6.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    NAV_ITEMS.forEachIndexed { index, item ->
+                        if (index == 2) {
+                            // Reserve center space in row layout for Cutout Notch
+                            Spacer(modifier = Modifier.weight(1.2f))
+                        } else {
+                            BottomItem(
+                                index = index,
+                                icon = item.icon,
+                                label = tr(item.labelKey),
+                                active = currentTab == index && !showNotifications && activeOverlay == null,
+                                modifier = Modifier.weight(1f),
+                                onClick = { onTabSelected(index) },
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Center Elevated Suwa AI Floating Action Button inside Cutout Notch (-30.dp Y-offset)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .offset(y = (-30).dp)
+                    .clickable(onClick = { onTabSelected(2) }),
+            ) {
+                Surface(
+                    shape = CircleShape,
+                    color = Color.White,
+                    shadowElevation = 8.dp,
+                    modifier = Modifier
+                        .size(62.dp)
+                        .border(
+                            width = 2.5.dp,
+                            color = if (currentTab == 2 && !showNotifications && activeOverlay == null) Color(0xFF10B981) else Color(0xFF00897B),
+                            shape = CircleShape,
+                        ),
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.ai_logo),
+                            contentDescription = tr("nav.ai"),
+                            modifier = Modifier
+                                .size(54.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Fit,
+                        )
+                    }
+                }
+                Spacer(Modifier.height(1.dp))
+                Text(
+                    text = tr("nav.ai"),
+                    fontSize = 10.5.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                )
+            }
+        }
+
+        // Dedicated System Navigation Bar Scrim Below
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                .background(navSystemBarGradient),
+        )
+    }
+}
+
 @Composable
 private fun BottomItem(index: Int, icon: String, label: String, active: Boolean, modifier: Modifier, onClick: () -> Unit) {
     Column(
         modifier = modifier
+            .padding(horizontal = 3.dp, vertical = 2.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(if (active) Color.White.copy(alpha = 0.95f) else Color.Transparent)
             .clickable(onClick = onClick)
-            .padding(vertical = 4.dp, horizontal = 2.dp),
+            .padding(vertical = 5.dp, horizontal = 2.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (index == 4 || icon == "👤") {
             Icon(
-                imageVector = Icons.Default.Person,
+                painter = painterResource(R.drawable.ic_person),
                 contentDescription = label,
                 modifier = Modifier.size(20.dp),
                 tint = if (active) Color(0xFF00897B) else Color.White,
@@ -603,11 +759,12 @@ private fun BottomItem(index: Int, icon: String, label: String, active: Boolean,
         Spacer(Modifier.height(1.dp))
         Text(
             label,
-            fontSize = 10.5.sp,
+            fontSize = 10.sp,
             fontWeight = if (active) FontWeight.Bold else FontWeight.SemiBold,
             color = if (active) Color(0xFF00897B) else Color.White,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+            softWrap = false,
             textAlign = TextAlign.Center,
         )
     }

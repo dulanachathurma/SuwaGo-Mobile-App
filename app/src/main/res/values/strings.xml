@@ -22,6 +22,7 @@
     <string name="auth_register">Register</string>
     <string name="auth_email">Email</string>
     <string name="auth_password">Password</string>
+    <string name="auth_confirmPassword">Confirm Password</string>
     <string name="auth_name">Full name</string>
     <string name="auth_noAccount">Don\'t have an account?</string>
     <string name="auth_haveAccount">Already have an account?</string>
@@ -61,7 +62,11 @@
     <string name="doctor_disclaimer">This is not a medical diagnosis. Always consult a qualified doctor.</string>
     <string name="doctor_reset">Start over</string>
     <string name="common_loading">Loading...</string>
-    <string name="err_MISSING_FIELDS">Please fill in all fields (password needs 6+ characters).</string>
+    <string name="err_MISSING_FIELDS">Please fill in all fields.</string>
+    <string name="err_PASSWORD_MIN_LENGTH">Password must be at least 8 characters long.</string>
+    <string name="err_PASSWORD_NO_LOWERCASE">Password must contain simple/lowercase English letters (a-z).</string>
+    <string name="err_PASSWORD_NO_UPPER_OR_NUMBER">Password must contain uppercase English letters (A-Z) or numbers (0-9).</string>
+    <string name="err_PASSWORD_MISMATCH">Password and Confirm Password do not match.</string>
     <string name="err_EMAIL_EXISTS">This email is already registered.</string>
     <string name="err_INVALID_CREDENTIALS">Incorrect email or password.</string>
     <string name="err_AUTH_REQUIRED">Please log in again.</string>
@@ -251,7 +256,6 @@
     <string name="pw_save">Update password</string>
     <string name="pw_done">Password changed successfully!</string>
     <string name="err_WRONG_PASSWORD">Current password is incorrect.</string>
-    <string name="err_PASSWORD_MISMATCH">The new passwords do not match.</string>
     <string name="err_PASSWORD_SHORT">The new password must be at least 6 characters.</string>
     <string name="notif_title">Notifications</string>
     <string name="notif_empty">No notifications yet.</string>

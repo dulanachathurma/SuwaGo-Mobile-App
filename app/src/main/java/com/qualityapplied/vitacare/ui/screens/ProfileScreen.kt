@@ -28,7 +28,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,15 +55,25 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(vm: AppViewModel, onOpenNotifications: () -> Unit = {}, onLogout: () -> Unit = {}) {
-    val user = vm.user ?: return
+    val user = vm.user
+    if (user == null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(tr("common.loading"), color = Slate500, fontSize = 14.sp)
+        }
+        return
+    }
+
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var name by rememberSaveable { mutableStateOf(user.name) }
-    var age by rememberSaveable { mutableStateOf(user.age?.toString() ?: "") }
-    var height by rememberSaveable { mutableStateOf(user.heightCm?.clean() ?: "") }
-    var weight by rememberSaveable { mutableStateOf(user.weightKg?.clean() ?: "") }
-    var avatar by rememberSaveable { mutableStateOf(user.avatarUrl) }
+    var name by remember(user.name) { mutableStateOf(user.name) }
+    var age by remember(user.age) { mutableStateOf(user.age?.toString() ?: "") }
+    var height by remember(user.heightCm) { mutableStateOf(user.heightCm?.clean() ?: "") }
+    var weight by remember(user.weightKg) { mutableStateOf(user.weightKg?.clean() ?: "") }
+    var avatar by remember(user.avatarUrl) { mutableStateOf(user.avatarUrl ?: "") }
     var error by remember { mutableStateOf("") }
     var saved by remember { mutableStateOf(false) }
     var saving by remember { mutableStateOf(false) }
@@ -90,7 +99,7 @@ fun ProfileScreen(vm: AppViewModel, onOpenNotifications: () -> Unit = {}, onLogo
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Avatar(avatar, name, 96.dp)
             Text(tr("profile.title"), fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Slate800, modifier = Modifier.padding(top = 12.dp))
-            Text(user.email, fontSize = 12.sp, color = Slate400)
+            Text(user.email ?: "", fontSize = 12.sp, color = Slate400)
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SmallPill(tr("profile.choosePhoto"), onClick = { picker.launch("image/*") })
