@@ -21,6 +21,8 @@
     <string name="pharmacy_viewPharmacies">ෆාමසි බලන්න</string>
     <string name="pharmacy_nearbyResults">ආසන්නතම ෆාමසි ලැයිස්තුව</string>
     <string name="pharmacy_directions">මාර්ගය</string>
+    <string name="pharmacy_modeGps">මාගේ ලොකේෂන් එකෙන්</string>
+    <string name="pharmacy_modeDistrict">පළාත හා දිස්ත්‍රික්කය අනුව</string>
     <string name="pharmacy_open">විවෘතයි</string>
     <string name="feature_reminders">මතක් කිරීම්</string>
     <string name="feature_reminders_desc">ඔබේ දෛනික බෙහෙත් වේලාවන් මගහැර නොගන්න</string>
