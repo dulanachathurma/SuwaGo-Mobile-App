@@ -43,6 +43,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.qualityapplied.vitacare.ui.showDatePickerSafe
+import com.qualityapplied.vitacare.ui.showTimePickerSafe
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -152,7 +154,10 @@ private fun DoctorBrowser(initialSpec: String?, onOpenMap: (String) -> Unit) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 90.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Column {
@@ -370,34 +375,6 @@ private fun BookingDialog(
     var loading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf("") }
 
-    val datePickerDialog = remember {
-        DatePickerDialog(
-            context,
-            { _, year, month, dayOfMonth ->
-                val cal = Calendar.getInstance()
-                cal.set(year, month, dayOfMonth)
-                selectedDate = sdf.format(cal.time)
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH),
-        )
-    }
-
-    val timePickerDialog = remember {
-        TimePickerDialog(
-            context,
-            { _, hourOfDay, minute ->
-                val amPm = if (hourOfDay >= 12) "PM" else "AM"
-                val hour12 = if (hourOfDay % 12 == 0) 12 else hourOfDay % 12
-                selectedSlot = String.format(Locale.US, "%02d:%02d %s", hour12, minute, amPm)
-            },
-            9,
-            0,
-            false,
-        )
-    }
-
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Book Appointment", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Slate800) },
@@ -407,11 +384,43 @@ private fun BookingDialog(
 
                 // Native Calendar Date Picker
                 Text("Selected Date: $selectedDate", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Slate700)
-                SmallPill("📅 Pick Date (Calendar)", onClick = { datePickerDialog.show() }, background = Teal50, textColor = Teal700)
+                SmallPill(
+                    "📅 Pick Date (Calendar)",
+                    onClick = {
+                        showDatePickerSafe(
+                            context = context,
+                            initialYear = calendar.get(Calendar.YEAR),
+                            initialMonth = calendar.get(Calendar.MONTH),
+                            initialDay = calendar.get(Calendar.DAY_OF_MONTH),
+                        ) { year, month, dayOfMonth ->
+                            val cal = Calendar.getInstance()
+                            cal.set(year, month, dayOfMonth)
+                            selectedDate = sdf.format(cal.time)
+                        }
+                    },
+                    background = Teal50,
+                    textColor = Teal700,
+                )
 
                 // Native Clock Time Picker
                 Text("Selected Time: $selectedSlot", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Slate700)
-                SmallPill("⏰ Pick Time (Clock)", onClick = { timePickerDialog.show() }, background = Teal50, textColor = Teal700)
+                SmallPill(
+                    "⏰ Pick Time (Clock)",
+                    onClick = {
+                        showTimePickerSafe(
+                            context = context,
+                            initialHour = 9,
+                            initialMinute = 0,
+                            is24Hour = false,
+                        ) { hourOfDay, minute ->
+                            val amPm = if (hourOfDay >= 12) "PM" else "AM"
+                            val hour12 = if (hourOfDay % 12 == 0) 12 else hourOfDay % 12
+                            selectedSlot = String.format(Locale.US, "%02d:%02d %s", hour12, minute, amPm)
+                        }
+                    },
+                    background = Teal50,
+                    textColor = Teal700,
+                )
 
                 AppTextField(notes, { notes = it }, "Notes / Symptoms (Optional)")
                 ErrorText(error)
