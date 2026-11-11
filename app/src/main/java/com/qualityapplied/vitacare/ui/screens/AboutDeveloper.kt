@@ -70,8 +70,10 @@ const val APP_DESCRIPTION = "SuwaGo is an AI-integrated smart digital healthcare
 
 private fun open(context: Context, intent: Intent) {
     try {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     } catch (_: ActivityNotFoundException) {
+    } catch (_: Exception) {
     }
 }
 

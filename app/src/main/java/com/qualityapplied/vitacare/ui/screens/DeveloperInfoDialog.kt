@@ -51,15 +51,23 @@ const val DEV_SECONDARY_SUBTITLE = "BSc (Hons) Software Engineering Undergraduat
 
 private fun openUrl(context: Context, url: String) {
     try {
-        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
     } catch (_: ActivityNotFoundException) {
+    } catch (_: Exception) {
     }
 }
 
 private fun openEmail(context: Context, email: String) {
     try {
-        context.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email")))
+        val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email")).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
     } catch (_: ActivityNotFoundException) {
+    } catch (_: Exception) {
     }
 }
 
