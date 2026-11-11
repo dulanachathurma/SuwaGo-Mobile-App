@@ -18,6 +18,8 @@
     <string name="pharmacy_district">Select District</string>
     <string name="pharmacy_enableLocation">Turn On GPS Location</string>
     <string name="pharmacy_locationActive">GPS Fix Acquired</string>
+    <string name="pharmacy_turnOn">Turn On</string>
+    <string name="pharmacy_gpsFix">GPS Fix</string>
     <string name="pharmacy_viewPharmacies">View Pharmacies</string>
     <string name="pharmacy_nearbyResults">Nearby Pharmacies</string>
     <string name="pharmacy_directions">Directions</string>

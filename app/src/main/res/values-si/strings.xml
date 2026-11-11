@@ -18,6 +18,8 @@
     <string name="pharmacy_district">දිස්ත්‍රික්කය තෝරන්න</string>
     <string name="pharmacy_enableLocation">ලොකේෂන් සක්‍රීය කරන්න</string>
     <string name="pharmacy_locationActive">ලොකේෂන් සක්‍රීයයි</string>
+    <string name="pharmacy_turnOn">On කරන්න</string>
+    <string name="pharmacy_gpsFix">GPS සක්‍රීයයි</string>
     <string name="pharmacy_viewPharmacies">ෆාමසි බලන්න</string>
     <string name="pharmacy_nearbyResults">ආසන්නතම ෆාමසි ලැයිස්තුව</string>
     <string name="pharmacy_directions">මාර්ගය</string>

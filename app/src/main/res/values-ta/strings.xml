@@ -18,6 +18,8 @@
     <string name="pharmacy_district">மாவட்டத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="pharmacy_enableLocation">இருப்பிடத்தைச் செயல்படுத்தவும்</string>
     <string name="pharmacy_locationActive">ஜிபிஎஸ் செயல்படுகிறது</string>
+    <string name="pharmacy_turnOn">இயக்கு</string>
+    <string name="pharmacy_gpsFix">ஜிபிஎஸ் ஆன்</string>
     <string name="pharmacy_viewPharmacies">மருந்தகங்களைப் பார்க்கவும்</string>
     <string name="pharmacy_nearbyResults">அருகிலுள்ள மருந்தகங்கள்</string>
     <string name="pharmacy_directions">திசைகள்</string>

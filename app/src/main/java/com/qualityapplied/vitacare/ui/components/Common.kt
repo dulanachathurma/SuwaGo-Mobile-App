@@ -162,17 +162,18 @@ fun SmallPill(
         modifier = modifier,
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = text,
                 color = textColor,
-                fontSize = 12.sp,
+                fontSize = 11.5.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
-                softWrap = false,
+                softWrap = true,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Clip,
             )
         }
     }

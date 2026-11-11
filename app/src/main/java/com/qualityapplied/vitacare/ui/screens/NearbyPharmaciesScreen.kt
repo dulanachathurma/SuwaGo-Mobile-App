@@ -220,7 +220,10 @@ fun NearbyPharmaciesScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(
+                                modifier = Modifier.weight(1f, fill = false),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
                                 Box(
                                     modifier = Modifier
                                         .size(10.dp)
@@ -239,11 +242,15 @@ fun NearbyPharmaciesScreen(
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     color = if (state.isLocationEnabled) Emerald600 else Slate800,
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                                 )
                             }
 
+                            Spacer(Modifier.width(6.dp))
+
                             SmallPill(
-                                text = if (state.isLocationEnabled) "✓ GPS Fix" else "📍 Turn On",
+                                text = if (state.isLocationEnabled) "✓ " + tr("pharmacy.gpsFix") else "📍 " + tr("pharmacy.turnOn"),
                                 onClick = {
                                     if (LocationHelper.hasPermission(context)) {
                                         isFetchingLocation = true
@@ -561,7 +568,10 @@ fun PharmacyCardLarge(
                     )
                 }
 
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
                     SmallPill(
                         text = "📞 " + tr("pharmacy.call"),
                         onClick = onCall,
