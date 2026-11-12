@@ -222,7 +222,10 @@ fun NearbyMapScreen(specId: String, onBack: () -> Unit) {
                         color = Slate500,
                         modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 4.dp),
                     )
-                    LazyColumn(modifier = Modifier.weight(1f)) {
+                    LazyColumn(
+                        modifier = Modifier.weight(1f),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 125.dp),
+                    ) {
                         items(places, key = { it.id }) { p ->
                             val unnamedStr = tr("map.unnamed")
                             PlaceRow(

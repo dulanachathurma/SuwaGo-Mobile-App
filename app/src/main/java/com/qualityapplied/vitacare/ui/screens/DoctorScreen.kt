@@ -157,7 +157,7 @@ private fun DoctorBrowser(initialSpec: String?, onOpenMap: (String) -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 90.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 22.dp, bottom = 125.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Column {

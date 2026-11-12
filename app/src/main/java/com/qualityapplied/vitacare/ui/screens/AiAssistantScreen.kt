@@ -133,7 +133,7 @@ fun AiAssistantScreen(vm: AppViewModel) {
 
         // Input row
         Row(
-            modifier = Modifier.fillMaxWidth().background(Color.White).padding(horizontal = 12.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().background(Color.White).padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 95.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             OutlinedTextField(

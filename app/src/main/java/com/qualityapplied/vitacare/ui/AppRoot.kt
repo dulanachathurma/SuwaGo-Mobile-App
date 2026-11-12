@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
@@ -270,7 +271,7 @@ fun SuwagoLogo(
 }
 
 val CurvedHeaderShape = GenericShape { size, _ ->
-    val curveHeight = 32f
+    val curveHeight = 18f
     moveTo(0f, 0f)
     lineTo(size.width, 0f)
     lineTo(size.width, size.height - curveHeight)
@@ -311,10 +312,13 @@ fun SuwagoModernHeader(
                 .fillMaxWidth()
                 .background(topBarGradient)
                 .statusBarsPadding()
-                .padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 18.dp),
+                .padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 14.dp),
+            contentAlignment = Alignment.Center,
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .widthIn(max = 840.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
@@ -347,20 +351,27 @@ fun SuwagoModernHeader(
                 Spacer(Modifier.width(6.dp))
 
                 if (showBell) {
-                    // Bell with unread badge
+                    // Bell button with unread badge (unclipped)
                     Box(
                         modifier = Modifier
-                            .size(36.dp)
-                            .clip(CircleShape)
-                            .background(Color.White.copy(alpha = 0.85f))
+                            .size(38.dp)
                             .clickable(onClick = onBell),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text("🔔", fontSize = 18.sp)
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(Color.White.copy(alpha = 0.85f)),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text("🔔", fontSize = 18.sp)
+                        }
                         if (unread > 0) {
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.TopEnd)
+                                    .offset(x = 1.dp, y = (-1).dp)
                                     .size(16.dp)
                                     .clip(CircleShape)
                                     .background(Rose500),
@@ -397,10 +408,17 @@ private fun Header(showBell: Boolean, unread: Int, onBell: () -> Unit, userName:
 @Composable
 private fun AuthFlow(vm: AppViewModel) {
     var showRegister by rememberSaveable { mutableStateOf(false) }
-    if (showRegister) {
-        RegisterScreen(vm, onGoLogin = { showRegister = false })
-    } else {
-        LoginScreen(vm, onGoRegister = { showRegister = true })
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter,
+    ) {
+        Box(modifier = Modifier.fillMaxSize().widthIn(max = 520.dp)) {
+            if (showRegister) {
+                RegisterScreen(vm, onGoLogin = { showRegister = false })
+            } else {
+                LoginScreen(vm, onGoRegister = { showRegister = true })
+            }
+        }
     }
 }
 
@@ -464,39 +482,46 @@ private fun MainFlow(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = innerPadding.calculateTopPadding()),
+            contentAlignment = Alignment.TopCenter,
         ) {
-            if (showNotifications) {
-                NotificationsScreen(onBack = { onShowNotifications(false) })
-            } else if (activeOverlay != null) {
-                when (activeOverlay) {
-                    "metrics" -> MetricsScreen(vm, onFindDoctor = { spec ->
-                        doctorSpec = spec
-                        activeOverlay = null
-                        tab = 1
-                    })
-                    "reminders" -> RemindersScreen()
-                    "vault" -> LabReportVaultScreen()
-                    "pharmacies" -> NearbyPharmaciesScreen(vm, onBack = { activeOverlay = null })
-                }
-            } else {
-                when (tab) {
-                    0 -> DashboardScreen(
-                        vm = vm,
-                        onOpenPharmacies = { activeOverlay = "pharmacies" },
-                        onOpenReminders = { activeOverlay = "reminders" },
-                        onOpenVault = { activeOverlay = "vault" },
-                    )
-                    1 -> DoctorScreen(doctorSpec)
-                    2 -> AiAssistantScreen(vm)
-                    3 -> MetricsScreen(vm, onFindDoctor = { spec ->
-                        doctorSpec = spec
-                        tab = 1
-                    })
-                    else -> ProfileScreen(
-                        vm,
-                        onOpenNotifications = { onShowNotifications(true) },
-                        onLogout = { confirmLogout = true },
-                    )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .widthIn(max = 840.dp),
+            ) {
+                if (showNotifications) {
+                    NotificationsScreen(onBack = { onShowNotifications(false) })
+                } else if (activeOverlay != null) {
+                    when (activeOverlay) {
+                        "metrics" -> MetricsScreen(vm, onFindDoctor = { spec ->
+                            doctorSpec = spec
+                            activeOverlay = null
+                            tab = 1
+                        })
+                        "reminders" -> RemindersScreen()
+                        "vault" -> LabReportVaultScreen()
+                        "pharmacies" -> NearbyPharmaciesScreen(vm, onBack = { activeOverlay = null })
+                    }
+                } else {
+                    when (tab) {
+                        0 -> DashboardScreen(
+                            vm = vm,
+                            onOpenPharmacies = { activeOverlay = "pharmacies" },
+                            onOpenReminders = { activeOverlay = "reminders" },
+                            onOpenVault = { activeOverlay = "vault" },
+                        )
+                        1 -> DoctorScreen(doctorSpec)
+                        2 -> AiAssistantScreen(vm)
+                        3 -> MetricsScreen(vm, onFindDoctor = { spec ->
+                            doctorSpec = spec
+                            tab = 1
+                        })
+                        else -> ProfileScreen(
+                            vm,
+                            onOpenNotifications = { onShowNotifications(true) },
+                            onLogout = { confirmLogout = true },
+                        )
+                    }
                 }
             }
         }
@@ -589,7 +614,7 @@ fun ThreeDotsPulseLoading(
  * Custom Shape featuring a deeper concave cutout notch using Path and Shape.
  */
 class NotchedBottomBarShape(
-    private val cutoutRadius: Dp = 39.dp,
+    private val cutoutRadius: Dp = 37.dp,
 ) : Shape {
     override fun createOutline(
         size: Size,
@@ -656,14 +681,14 @@ fun SuwaGoBottomBar(
             // Main Bottom Bar Surface with Custom Semi-Circular Cutout Notch Shape & #00897B Background Color
             Surface(
                 color = Color(0xFF00897B),
-                shape = BottomBarCurvedShape(cutoutRadius = 39.dp),
+                shape = BottomBarCurvedShape(cutoutRadius = 37.dp),
                 shadowElevation = 8.dp,
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 6.dp),
+                        .padding(horizontal = 8.dp, vertical = 3.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -689,7 +714,7 @@ fun SuwaGoBottomBar(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .offset(y = (-40).dp)
+                    .offset(y = (-32).dp)
                     .clickable(onClick = { onTabSelected(2) }),
             ) {
                 Surface(
@@ -727,7 +752,7 @@ fun SuwaGoBottomBar(
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
                 modifier = Modifier
-                    .offset(y = (-4).dp)
+                    .offset(y = (-3).dp)
                     .clickable(onClick = { onTabSelected(2) }),
             )
         }
@@ -746,22 +771,22 @@ fun SuwaGoBottomBar(
 private fun BottomItem(index: Int, icon: String, label: String, active: Boolean, modifier: Modifier, onClick: () -> Unit) {
     Column(
         modifier = modifier
-            .padding(horizontal = 3.dp, vertical = 2.dp)
+            .padding(horizontal = 2.dp, vertical = 1.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(if (active) Color.White.copy(alpha = 0.95f) else Color.Transparent)
             .clickable(onClick = onClick)
-            .padding(vertical = 5.dp, horizontal = 2.dp),
+            .padding(vertical = 3.dp, horizontal = 2.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (index == 4 || icon == "👤") {
             Icon(
                 painter = painterResource(R.drawable.ic_person),
                 contentDescription = label,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(19.dp),
                 tint = if (active) Color(0xFF00897B) else Color.White,
             )
         } else {
-            Text(icon, fontSize = 18.sp)
+            Text(icon, fontSize = 17.sp)
         }
         Spacer(Modifier.height(1.dp))
         Text(

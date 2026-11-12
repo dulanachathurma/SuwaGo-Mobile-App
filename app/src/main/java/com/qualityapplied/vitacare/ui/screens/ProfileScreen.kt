@@ -93,7 +93,7 @@ fun ProfileScreen(vm: AppViewModel, onOpenNotifications: () -> Unit = {}, onLogo
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, end = 16.dp, top = 22.dp, bottom = 125.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {

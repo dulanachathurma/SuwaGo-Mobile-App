@@ -100,7 +100,7 @@ fun LabReportVaultScreen() {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, end = 16.dp, top = 22.dp, bottom = 125.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Row(

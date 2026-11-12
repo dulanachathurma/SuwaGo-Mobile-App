@@ -41,28 +41,34 @@
         app:layout_constraintGuide_percent="0.74" />
 
     <!-- 2. Center Branding (Logo & Title) -->
-    <!-- Image 1: 3D Stethoscope Logo -->
+    <!-- Image 1: Responsive 3D Stethoscope Logo -->
     <ImageView
         android:id="@+id/imgStethoscope"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="SuwaGo Stethoscope Logo"
         android:scaleType="fitCenter"
         android:src="@drawable/vitacare_logo"
         app:layout_constraintBottom_toTopOf="@+id/imgSuwagoText"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="160dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_max="160dp"
+        app:layout_constraintWidth_percent="0.32"
         tools:src="@drawable/vitacare_logo" />
 
-    <!-- Image 2: Unified SuwaGo Text Logo Container -->
+    <!-- Image 2: Responsive Unified SuwaGo Text Logo Container -->
     <LinearLayout
         android:id="@+id/imgSuwagoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
@@ -70,12 +76,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgStethoscope">
 
-        <!-- Container for "suwa" with Green Leaf 🍃 directly above 'w' and 'a' -->
+        <!-- Container for "suwa" -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-            <!-- Green leaf floating directly between 'w' and 'a' -->
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -91,7 +95,7 @@
                     android:letterSpacing="-0.04"
                     android:text="suw"
                     android:textColor="#0066FF"
-                    android:textSize="100sp"
+                    android:textSize="80sp"
                     android:textStyle="bold" />
 
                 <!-- "a" in electric blue -->
@@ -103,7 +107,7 @@
                     android:letterSpacing="-0.04"
                     android:text="a"
                     android:textColor="#0066FF"
-                    android:textSize="100sp"
+                    android:textSize="80sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -117,26 +121,26 @@
             android:letterSpacing="-0.04"
             android:text="g"
             android:textColor="#E50914"
-            android:textSize="100sp"
+            android:textSize="80sp"
             android:textStyle="bold" />
 
         <!-- "o" red circular badge with white center and stethoscope icon -->
         <FrameLayout
-            android:layout_width="86dp"
-            android:layout_height="86dp"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/bg_red_circle">
 
             <FrameLayout
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_white_circle">
 
                 <ImageView
-                    android:layout_width="66dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="46dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
@@ -157,7 +161,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgSuwagoText" />
 
     <!-- 3. Bottom Typography -->
-    <!-- Primary Sinhala Tagline (Set to 40sp with AutoSize) -->
+    <!-- Primary Sinhala Tagline -->
     <TextView
         android:id="@+id/txtSinhalaTagline"
         android:layout_width="0dp"
@@ -169,7 +173,7 @@
         android:maxLines="1"
         android:text="නීරෝගී ජීවිතයකට"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:autoSizeMaxTextSize="40sp"
         app:autoSizeMinTextSize="18sp"
@@ -190,7 +194,7 @@
         android:maxLines="1"
         android:text="Your Personal Health Companion"
         android:textColor="#E5E7EB"
-        android:textSize="18sp"
+        android:textSize="15sp"
         app:autoSizeMaxTextSize="20sp"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeTextType="uniform"
