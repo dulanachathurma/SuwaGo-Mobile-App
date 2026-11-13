@@ -184,10 +184,6 @@ fun ProfileScreen(vm: AppViewModel, onOpenNotifications: () -> Unit = {}, onLogo
         ) {
             Text("🚪  " + tr("profile.logout"), color = Rose600, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
         }
-
-        Spacer(Modifier.height(8.dp))
-        DeveloperCard()
-        Spacer(Modifier.height(4.dp))
     }
 
     if (showPassword) ChangePasswordDialog(vm, onDismiss = { showPassword = false })
