@@ -611,13 +611,11 @@ fun ThreeDotsPulseLoading(
 }
 
 /**
- * Custom Shape featuring a smooth curved cradle notch ("wkra") around the center floating button
- * with smooth bezier transitions into the cutout.
+ * Custom Shape featuring a precise semi-circular cutout notch around the center AI button
+ * that strictly mirrors the circle shape of the button, with flat/straight outer corners.
  */
 class NotchedBottomBarShape(
-    private val cutoutRadius: Dp = 40.dp,
-    private val cutoutDepth: Dp = 34.dp,
-    private val cornerRadius: Dp = 16.dp,
+    private val cutoutRadius: Dp = 39.dp,
 ) : Shape {
     override fun createOutline(
         size: Size,
@@ -625,41 +623,28 @@ class NotchedBottomBarShape(
         density: Density,
     ): Outline {
         val path = Path().apply {
-            val cr = with(density) { cornerRadius.toPx() }
             val r = with(density) { cutoutRadius.toPx() }
-            val d = with(density) { cutoutDepth.toPx() }
             val cx = size.width / 2f
-            val s = r * 0.45f
 
-            moveTo(0f, cr)
-            // Rounded top-left corner
-            quadraticBezierTo(0f, 0f, cr, 0f)
-
-            // Flat top line to start of left notch shoulder
-            lineTo(cx - r - s, 0f)
-
-            // Smooth curve into the notch cradle
-            cubicTo(
-                cx - r - (s * 0.4f), 0f,
-                cx - r, d * 0.85f,
-                cx, d,
+            // Start at flat top-left corner
+            moveTo(0f, 0f)
+            // Flat top line to left edge of center circular notch
+            lineTo(cx - r, 0f)
+            // Perfect semi-circular cutout arc mirroring the circle shape of the center button
+            arcTo(
+                rect = Rect(
+                    left = cx - r,
+                    top = -r,
+                    right = cx + r,
+                    bottom = r,
+                ),
+                startAngleDegrees = 180f,
+                sweepAngleDegrees = -180f,
+                forceMoveTo = false,
             )
-            // Smooth curve out of the notch cradle
-            cubicTo(
-                cx + r, d * 0.85f,
-                cx + r + (s * 0.4f), 0f,
-                cx + r + s, 0f,
-            )
-
-            // Flat top line to start of right corner
-            lineTo(size.width - cr, 0f)
-
-            // Rounded top-right corner
-            quadraticBezierTo(size.width, 0f, size.width, cr)
-
-            // Down right edge to bottom right
+            // Flat top line to flat top-right corner
+            lineTo(size.width, 0f)
             lineTo(size.width, size.height)
-            // Bottom edge to bottom left
             lineTo(0f, size.height)
             close()
         }

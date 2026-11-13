@@ -24,7 +24,7 @@
     <string name="pharmacy_nearbyResults">Nearby Pharmacies</string>
     <string name="pharmacy_directions">Directions</string>
     <string name="pharmacy_modeGps">Use GPS Location</string>
-    <string name="pharmacy_modeDistrict">By Province &amp; District</string>
+    <string name="pharmacy_modeDistrict">Province &amp; District</string>
     <string name="pharmacy_open">Open Now</string>
     <string name="pharmacy_call">Call</string>
     <string name="feature_reminders">Medicine Reminders</string>
