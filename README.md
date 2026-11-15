@@ -6,7 +6,7 @@
 
 ---
 
-[![View Project Proposal PDF](https://img.shields.io/badge/📄%20View%20Project%20Proposal%20PDF-0E8C7F?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/file/d/16u8mdVP9Wt4ZvQgWhEnEsdoRQpEps7jj/view?usp=sharing)
+[![View Project Proposal PDF](https://img.shields.io/badge/📄%20View%20Project%20Proposal%20PDF-0E8C7F?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/file/d/1HX98HA_Tw4_w10oetprQilRiGQAHT7db/view?usp=sharing)
 
 ## 📺 Watch the App Walkthrough
 
