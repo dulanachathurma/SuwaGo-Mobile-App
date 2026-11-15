@@ -16,6 +16,8 @@
 
 </div>
 
+---
+
 ### Your smart health companion in your pocket
 
 **Native Android app built with Kotlin and Jetpack Compose**
