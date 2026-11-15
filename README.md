@@ -12,8 +12,6 @@
 
 <div align="center">
 
-[![SuwaGo App Walkthrough](https://github.com/user-attachments/assets/0ab47d04-4a11-43de-ba29-5684e9651eb0)](https://drive.google.com/file/d/1fWQO5hEdjNIDelbE2UGX0INCrX0B376P/view?usp=sharing)
-
 [**▶ Click here to watch the full video walkthrough on Google Drive**](https://drive.google.com/file/d/1fWQO5hEdjNIDelbE2UGX0INCrX0B376P/view?usp=sharing)
 
 </div>
