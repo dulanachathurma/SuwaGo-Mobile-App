@@ -8,6 +8,16 @@
 
 [![View Project Proposal PDF](https://img.shields.io/badge/📄%20View%20Project%20Proposal%20PDF-0E8C7F?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/file/d/16u8mdVP9Wt4ZvQgWhEnEsdoRQpEps7jj/view?usp=sharing)
 
+## 📺 Watch the App Walkthrough
+
+<div align="center">
+
+[![SuwaGo App Walkthrough](https://github.com/user-attachments/assets/0ab47d04-4a11-43de-ba29-5684e9651eb0)](https://drive.google.com/file/d/1fWQO5hEdjNIDelbE2UGX0INCrX0B376P/view?usp=sharing)
+
+[**▶ Click here to watch the full video walkthrough on Google Drive**](https://drive.google.com/file/d/1fWQO5hEdjNIDelbE2UGX0INCrX0B376P/view?usp=sharing)
+
+</div>
+
 ### Your smart health companion in your pocket
 
 **Native Android app built with Kotlin and Jetpack Compose**
