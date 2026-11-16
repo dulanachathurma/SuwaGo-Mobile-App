@@ -274,4 +274,4 @@ BSc (Hons) Software Engineering Undergraduate · University of Kelaniya
 
 ## Disclaimer
 
-The health guidance in this app is **educational and not medical advice**. It does not replace a real doctor. In an emergency call **1990** right away.
+The health guidance in this app is **educational and not medical advice**. It does not replace a real doctor. In an emergency call **1990** right away
