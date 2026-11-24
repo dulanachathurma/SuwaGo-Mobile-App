@@ -228,7 +228,7 @@ app/src/main/res/values{,-si,-ta}/strings.xml    209 strings per language
 
 | Area | Technology |
 |---|---|
-| Language | Kotlin |
+| Languages | Kotlin |
 | UI | Jetpack Compose and Material Design 3 |
 | State | ViewModel and StateFlow and Coroutines |
 | Networking | OkHttp3 and JSON |
